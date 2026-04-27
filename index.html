@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Calculated Slacker — Dashboard</title>
+  <style>
+    :root {
+      --green: #2e7d5e;
+      --green-light: #4caf85;
+      --green-bg: #e8f5ee;
+      --orange: #e87d2e;
+      --orange-bg: #fef3e8;
+      --bg: #f5f7f5;
+      --card: #ffffff;
+      --text: #1a2e1a;
+      --text-muted: #6b7c6b;
+      --border: #dce8dc;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* HEADER */
+    .header {
+      background: var(--green);
+      color: white;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header h1 span { opacity: 0.7; font-weight: 400; font-size: 1rem; margin-left: 8px; }
+    .header-meta { font-size: 0.85rem; opacity: 0.8; }
+
+    /* LAYOUT */
+    .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--green);
+    }
+    .stat-card.orange { border-left-color: var(--orange); }
+    .stat-card .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .stat-card .value { font-size: 1.8rem; font-weight: 700; color: var(--text); }
+    .stat-card .sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 3px; }
+
+    /* SECTION */
+    .section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px; overflow: hidden; }
+    .section-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .section-header h2 { font-size: 1rem; font-weight: 600; }
+    .section-body { padding: 20px 24px; }
+
+    /* BUTTONS */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-primary:hover { background: #245f4a; }
+    .btn-sm { padding: 5px 10px; font-size: 0.78rem; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+    .btn-danger { background: #fee; color: #c0392b; border: 1.5px solid #fcc; }
+    .btn-danger:hover { background: #fcc; }
+
+    /* STATUS BADGES */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-idea { background: #eef; color: #555; }
+    .badge-shoot { background: #fff3e0; color: #e65100; }
+    .badge-edit { background: #e3f2fd; color: #1565c0; }
+    .badge-caption { background: #f3e5f5; color: #6a1b9a; }
+    .badge-scheduled { background: #e8f5e9; color: #2e7d32; }
+    .badge-posted { background: var(--green); color: white; }
+
+    /* FORMAT BADGES */
+    .fmt { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; }
+    .fmt-reel { background: #fce4ec; color: #c2185b; }
+    .fmt-carousel { background: #e8eaf6; color: #3949ab; }
+    .fmt-static { background: #f9fbe7; color: #558b2f; }
+
+    /* TABLE */
+    .post-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .post-table th { text-align: left; padding: 10px 12px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); border-bottom: 1.5px solid var(--border); }
+    .post-table td { padding: 12px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .post-table tr:last-child td { border-bottom: none; }
+    .post-table tr:hover td { background: var(--bg); }
+    .recipe-name { font-weight: 600; }
+    .ingredients { font-size: 0.8rem; color: var(--text-muted); }
+    .protein-val { font-weight: 700; color: var(--green); }
+    .actions { display: flex; gap: 6px; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+      display: none;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      width: 520px;
+      max-width: 95vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal h3 { font-size: 1.1rem; margin-bottom: 20px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.3px; }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      transition: border-color 0.15s;
+    }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+      outline: none; border-color: var(--green);
+    }
+    .form-row textarea { resize: vertical; min-height: 70px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+    /* IDEAS BANK */
+    .ideas-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .idea-tag {
+      background: var(--green-bg);
+      color: var(--green);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .idea-tag .del-idea { cursor: pointer; opacity: 0.5; font-size: 1rem; line-height: 1; }
+    .idea-tag .del-idea:hover { opacity: 1; }
+    .idea-input-row { display: flex; gap: 8px; margin-bottom: 14px; }
+    .idea-input-row input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem; font-family: inherit; }
+    .idea-input-row input:focus { outline: none; border-color: var(--green); }
+
+    /* CALENDAR */
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .cal-day { min-height: 90px; background: var(--bg); border-radius: 8px; padding: 8px; font-size: 0.78rem; }
+    .cal-day .day-label { font-weight: 700; color: var(--text-muted); margin-bottom: 4px; font-size: 0.7rem; text-transform: uppercase; }
+    .cal-day .day-num { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
+    .cal-day.today { background: var(--green-bg); border: 2px solid var(--green-light); }
+    .cal-post { background: var(--green); color: white; border-radius: 4px; padding: 2px 6px; font-size: 0.7rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: default; }
+    .cal-post.reel { background: #c2185b; }
+    .cal-post.carousel { background: #3949ab; }
+
+    /* PIPELINE */
+    .pipeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .pipeline-col { background: var(--bg); border-radius: 8px; padding: 10px; }
+    .pipeline-col-header { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .pipeline-count { background: white; color: var(--text); padding: 1px 7px; border-radius: 10px; font-size: 0.7rem; }
+    .pipeline-item { background: white; border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 0.78rem; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    .pipeline-item .pi-name { font-weight: 600; margin-bottom: 3px; }
+    .pipeline-item .pi-meta { color: var(--text-muted); font-size: 0.72rem; }
+
+    /* NOTES */
+    .notes-area { width: 100%; min-height: 100px; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.88rem; resize: vertical; color: var(--text); }
+    .notes-area:focus { outline: none; border-color: var(--green); }
+
+    /* EMPTY STATE */
+    .empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.9rem; }
+    .empty .emoji { font-size: 2rem; margin-bottom: 8px; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 24px; }
+    .tab { padding: 12px 20px; font-size: 0.875rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px; }
+    .tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .pipeline { grid-template-columns: repeat(3, 1fr); }
+      .calendar-grid { grid-template-columns: repeat(7, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🥗 The Calculated Slacker <span id="accountName">@thecalculatedslacker</span></h1>
+  </div>
+  <div class="header-meta" id="headerDate"></div>
+</div>
+
+<div class="main">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="label">Total Posts</div>
+      <div class="value" id="stat-total">0</div>
+      <div class="sub">All time</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Posted</div>
+      <div class="value" id="stat-posted">0</div>
+      <div class="sub">Published</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">In Pipeline</div>
+      <div class="value" id="stat-pipeline">0</div>
+      <div class="sub">Idea → Scheduled</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="label">This Week</div>
+      <div class="value" id="stat-week">0</div>
+      <div class="sub">Scheduled / Posted</div>
+    </div>
+  </div>
+
+  <!-- MAIN SECTION WITH TABS -->
+  <div class="section">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('posts')">📋 Post Tracker</div>
+      <div class="tab" onclick="switchTab('pipeline')">🔄 Pipeline</div>
+      <div class="tab" onclick="switchTab('calendar')">📅 Calendar</div>
+      <div class="tab" onclick="switchTab('ideas')">💡 Ideas Bank</div>
+      <div class="tab" onclick="switchTab('notes')">📝 Notes</div>
+    </div>
+
+    <!-- POST TRACKER TAB -->
+    <div id="tab-posts" class="tab-content active">
+      <div class="section-header">
+        <h2>All Posts</h2>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <select id="filterStatus" onchange="renderPosts()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:0.82rem;color:var(--text-muted);">
+            <option value="">All Statuses</option>
+            <option value="idea">Idea</option>
+            <option value="shoot">Shoot</option>
+            <option value="edit">Edit</option>
+            <option value="caption">Caption</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="posted">Posted</option>
+          </select>
+          <button class="btn btn-primary" onclick="openModal()">+ Add Post</button>
+        </div>
+      </div>
+      <div class="section-body" style="padding:0;">
+        <div id="posts-container"></div>
+      </div>
+    </div>
+
+    <!-- PIPELINE TAB -->
+    <div id="tab-pipeline" class="tab-content">
+      <div class="section-header"><h2>Content Pipeline</h2></div>
+      <div class="section-body">
+        <div class="pipeline" id="pipeline-board"></div>
+      </div>
+    </div>
+
+    <!-- CALENDAR TAB -->
+    <div id="tab-calendar" class="tab-content">
+      <div class="section-header">
+        <h2 id="calMonthLabel">Calendar</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline btn-sm" onclick="changeMonth(-1)">← Prev</button>
+          <button class="btn btn-outline btn-sm" onclick="changeMonth(1)">Next →</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;">
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">SUN</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">MON</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">TUE</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">WED</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">THU</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">FRI</div>
+          <div style="text-align:center;font-size:0.7rem;font-weight:700;color:var(--text-muted);padding:4px;">SAT</div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+    </div>
+
+    <!-- IDEAS BANK TAB -->
+    <div id="tab-ideas" class="tab-content">
+      <div class="section-header"><h2>Ideas Bank</h2><span style="font-size:0.82rem;color:var(--text-muted);">Dump recipe ideas here — convert to posts when ready</span></div>
+      <div class="section-body">
+        <div class="idea-input-row">
+          <input type="text" id="ideaInput" placeholder="e.g. High protein rajma bowl, 30g protein per serving..." onkeydown="if(event.key==='Enter')addIdea()" />
+          <button class="btn btn-primary" onclick="addIdea()">Add Idea</button>
+        </div>
+        <div class="ideas-list" id="ideas-list"></div>
+      </div>
+    </div>
+
+    <!-- NOTES TAB -->
+    <div id="tab-notes" class="tab-content">
+      <div class="section-header"><h2>Channel Notes</h2><span style="font-size:0.82rem;color:var(--text-muted);">Strategy, brand voice, hashtag sets, anything goes</span></div>
+      <div class="section-body">
+        <textarea class="notes-area" id="notesArea" placeholder="Write your channel strategy, content pillars, brand voice notes, hashtag sets...&#10;&#10;e.g.&#10;Content Pillars:&#10;1. High protein Indian recipes (core)&#10;2. Meal prep for the week&#10;3. Restaurant-style healthy meals at home&#10;&#10;Hashtag Sets:&#10;#highprotein #indianfood #healthyeating #proteinrecipes #indianfitness" onchange="saveNotes()"></textarea>
+        <div style="margin-top:10px;display:flex;justify-content:flex-end;">
+          <button class="btn btn-primary btn-sm" onclick="saveNotes()">Save Notes</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section -->
+
+</div><!-- /main -->
+
+<!-- ADD/EDIT POST MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Add New Post</h3>
+    <div class="form-grid">
+      <div class="form-row" style="grid-column:1/-1;">
+        <label>Recipe Name *</label>
+        <input type="text" id="f-name" placeholder="e.g. Paneer Bhurji Protein Bowl" />
+      </div>
+      <div class="form-row">
+        <label>Format</label>
+        <select id="f-format">
+          <option value="Reel">🎬 Reel</option>
+          <option value="Carousel">🎠 Carousel</option>
+          <option value="Static">📷 Static</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Status</label>
+        <select id="f-status">
+          <option value="idea">Idea</option>
+          <option value="shoot">Shoot</option>
+          <option value="edit">Edit</option>
+          <option value="caption">Caption</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="posted">Posted</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Protein (g per serving)</label>
+        <input type="number" id="f-protein" placeholder="e.g. 35" />
+      </div>
+      <div class="form-row">
+        <label>Scheduled Date</label>
+        <input type="date" id="f-date" />
+      </div>
+      <div class="form-row" style="grid-column:1/-1;">
+        <label>Key Ingredients</label>
+        <input type="text" id="f-ingredients" placeholder="e.g. Paneer, Eggs, Chickpeas" />
+      </div>
+      <div class="form-row" style="grid-column:1/-1;">
+        <label>Caption / Notes</label>
+        <textarea id="f-caption" placeholder="Draft caption, hooks, or production notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePost()">Save Post</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── DATA ────────────────────────────────────────────────
+  let posts = JSON.parse(localStorage.getItem('ig_posts') || '[]');
+  let ideas = JSON.parse(localStorage.getItem('ig_ideas') || '[]');
+  let editingId = null;
+  let calendarDate = new Date();
+
+  const STATUSES = ['idea','shoot','edit','caption','scheduled','posted'];
+  const STATUS_LABELS = { idea:'Idea', shoot:'Shoot', edit:'Edit', caption:'Caption', scheduled:'Scheduled', posted:'Posted' };
+  const STATUS_COLORS = { idea:'badge-idea', shoot:'badge-shoot', edit:'badge-edit', caption:'badge-caption', scheduled:'badge-scheduled', posted:'badge-posted' };
+
+  function save() { localStorage.setItem('ig_posts', JSON.stringify(posts)); updateStats(); }
+  function saveIdeas() { localStorage.setItem('ig_ideas', JSON.stringify(ideas)); }
+  function saveNotes() { localStorage.setItem('ig_notes', document.getElementById('notesArea').value); }
+
+  // ─── INIT ─────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    document.getElementById('notesArea').value = localStorage.getItem('ig_notes') || '';
+    const handle = localStorage.getItem('ig_handle') || '@thecalculatedslacker';
+    document.getElementById('accountName').textContent = handle;
+    document.getElementById('accountName').onclick = () => {
+      const n = prompt('Enter your Instagram handle:', handle);
+      if(n){ localStorage.setItem('ig_handle', n); document.getElementById('accountName').textContent = n; }
+    };
+    document.getElementById('accountName').style.cursor = 'pointer';
+    renderAll();
+    // Add sample data if empty
+    if(posts.length === 0) addSampleData();
+  });
+
+  function addSampleData() {
+    const today = new Date();
+    const fmt = d => d.toISOString().split('T')[0];
+    const d = (offset) => { const x = new Date(today); x.setDate(x.getDate()+offset); return fmt(x); };
+    posts = [
+      { id:1, name:'High Protein Rajma Bowl', format:'Reel', status:'posted', protein:32, ingredients:'Rajma, Brown Rice, Greek Yogurt', caption:'Rajma done right 💪', date: d(-3) },
+      { id:2, name:'Paneer Bhurji Protein Bowl', format:'Carousel', status:'scheduled', protein:38, ingredients:'Paneer, Eggs, Bell Peppers', caption:'', date: d(2) },
+      { id:3, name:'Moong Dal Chilla', format:'Reel', status:'edit', protein:22, ingredients:'Moong Dal, Spinach, Tofu', caption:'', date: d(5) },
+      { id:4, name:'Chicken Tikka Salad', format:'Static', status:'shoot', protein:45, ingredients:'Chicken, Curd, Veggies', caption:'', date: '' },
+      { id:5, name:'Sprouts Chaat Remix', format:'Reel', status:'idea', protein:18, ingredients:'Sprouts, Chickpeas, Pomegranate', caption:'', date: '' },
+    ];
+    ideas = ['High protein sabudana', 'Egg bhurji wrap', 'Sattu shake variations', 'Lentil soup (daal) makeover'];
+    save();
+    saveIdeas();
+    renderAll();
+  }
+
+  // ─── RENDER ALL ───────────────────────────────────────────
+  function renderAll() { renderPosts(); renderPipeline(); renderCalendar(); renderIdeas(); updateStats(); }
+
+  // ─── STATS ────────────────────────────────────────────────
+  function updateStats() {
+    document.getElementById('stat-total').textContent = posts.length;
+    document.getElementById('stat-posted').textContent = posts.filter(p=>p.status==='posted').length;
+    document.getElementById('stat-pipeline').textContent = posts.filter(p=>p.status!=='posted').length;
+    const now = new Date();
+    const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay());
+    const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6);
+    const weekPosts = posts.filter(p => {
+      if(!p.date) return false;
+      const d = new Date(p.date);
+      return d >= weekStart && d <= weekEnd;
+    });
+    document.getElementById('stat-week').textContent = weekPosts.length;
+  }
+
+  // ─── POSTS TABLE ──────────────────────────────────────────
+  function renderPosts() {
+    const filter = document.getElementById('filterStatus').value;
+    let filtered = filter ? posts.filter(p=>p.status===filter) : posts;
+    const container = document.getElementById('posts-container');
+    if(filtered.length === 0) {
+      container.innerHTML = `<div class="empty"><div class="emoji">🍽️</div>No posts yet. Add your first recipe post!</div>`;
+      return;
+    }
+    container.innerHTML = `<table class="post-table">
+      <thead><tr>
+        <th>Recipe</th><th>Format</th><th>Protein</th><th>Ingredients</th><th>Date</th><th>Status</th><th>Actions</th>
+      </tr></thead>
+      <tbody>${filtered.map(p => `
+        <tr>
+          <td><div class="recipe-name">${p.name}</div>${p.caption ? `<div class="ingredients" title="${p.caption}">${p.caption.substring(0,50)}${p.caption.length>50?'...':''}</div>` : ''}</td>
+          <td><span class="fmt fmt-${p.format.toLowerCase()}">${p.format}</span></td>
+          <td><span class="protein-val">${p.protein || '—'}g</span></td>
+          <td><span class="ingredients">${p.ingredients || '—'}</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">${p.date ? new Date(p.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : '—'}</td>
+          <td>
+            <select class="badge ${STATUS_COLORS[p.status]}" onchange="updateStatus(${p.id}, this.value)" style="border:none;background:transparent;cursor:pointer;font-weight:600;font-size:0.72rem;text-transform:uppercase;">
+              ${STATUSES.map(s=>`<option value="${s}" ${p.status===s?'selected':''}>${STATUS_LABELS[s]}</option>`).join('')}
+            </select>
+          </td>
+          <td><div class="actions">
+            <button class="btn btn-outline btn-sm" onclick="openEditModal(${p.id})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deletePost(${p.id})">Del</button>
+          </div></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
+
+  // ─── PIPELINE ─────────────────────────────────────────────
+  function renderPipeline() {
+    const board = document.getElementById('pipeline-board');
+    board.innerHTML = STATUSES.map(s => {
+      const items = posts.filter(p=>p.status===s);
+      return `<div class="pipeline-col">
+        <div class="pipeline-col-header">
+          ${STATUS_LABELS[s]} <span class="pipeline-count">${items.length}</span>
+        </div>
+        ${items.length === 0 ? `<div style="font-size:0.72rem;color:var(--text-muted);text-align:center;padding:10px 0;">Empty</div>` :
+          items.map(p=>`<div class="pipeline-item">
+            <div class="pi-name">${p.name}</div>
+            <div class="pi-meta"><span class="fmt fmt-${p.format.toLowerCase()}" style="font-size:0.65rem;">${p.format}</span> ${p.protein ? `· ${p.protein}g protein` : ''}</div>
+          </div>`).join('')}
+      </div>`;
+    }).join('');
+  }
+
+  // ─── CALENDAR ─────────────────────────────────────────────
+  function changeMonth(dir) { calendarDate.setMonth(calendarDate.getMonth()+dir); renderCalendar(); }
+
+  function renderCalendar() {
+    const year = calendarDate.getFullYear();
+    const month = calendarDate.getMonth();
+    document.getElementById('calMonthLabel').textContent = calendarDate.toLocaleDateString('en-IN', { month:'long', year:'numeric' });
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const today = new Date(); today.setHours(0,0,0,0);
+    const grid = document.getElementById('calendar-grid');
+    let html = '';
+    for(let i=0; i<firstDay; i++) html += `<div class="cal-day" style="opacity:0.3;"></div>`;
+    for(let d=1; d<=daysInMonth; d++) {
+      const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dayDate = new Date(year, month, d);
+      const isToday = dayDate.getTime() === today.getTime();
+      const dayPosts = posts.filter(p=>p.date===dateStr);
+      html += `<div class="cal-day ${isToday?'today':''}">
+        <div class="day-num">${d}</div>
+        ${dayPosts.map(p=>`<div class="cal-post ${p.format.toLowerCase()}" title="${p.name}">${p.name.substring(0,15)}${p.name.length>15?'...':''}</div>`).join('')}
+      </div>`;
+    }
+    grid.innerHTML = html;
+  }
+
+  // ─── IDEAS ────────────────────────────────────────────────
+  function addIdea() {
+    const val = document.getElementById('ideaInput').value.trim();
+    if(!val) return;
+    ideas.push(val);
+    document.getElementById('ideaInput').value = '';
+    saveIdeas();
+    renderIdeas();
+  }
+
+  function deleteIdea(i) { ideas.splice(i,1); saveIdeas(); renderIdeas(); }
+
+  function convertIdeaToPost(i) {
+    openModal();
+    document.getElementById('f-name').value = ideas[i];
+    ideas.splice(i,1);
+    saveIdeas();
+    renderIdeas();
+    switchTab('posts');
+    // re-open modal after tab switch
+    setTimeout(()=>document.getElementById('modal').classList.add('open'), 50);
+  }
+
+  function renderIdeas() {
+    const list = document.getElementById('ideas-list');
+    if(ideas.length === 0) { list.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem;padding:10px 0;">No ideas yet. Add some above!</div>`; return; }
+    list.innerHTML = ideas.map((idea,i)=>
+      `<div class="idea-tag">
+        <span onclick="convertIdeaToPost(${i})" style="cursor:pointer;" title="Convert to post">${idea}</span>
+        <span class="del-idea" onclick="deleteIdea(${i})">×</span>
+      </div>`
+    ).join('');
+  }
+
+  // ─── MODAL ────────────────────────────────────────────────
+  function openModal() {
+    editingId = null;
+    document.getElementById('modal-title').textContent = 'Add New Post';
+    ['f-name','f-protein','f-ingredients','f-caption','f-date'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-format').value = 'Reel';
+    document.getElementById('f-status').value = 'idea';
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function openEditModal(id) {
+    const p = posts.find(x=>x.id===id);
+    if(!p) return;
+    editingId = id;
+    document.getElementById('modal-title').textContent = 'Edit Post';
+    document.getElementById('f-name').value = p.name;
+    document.getElementById('f-format').value = p.format;
+    document.getElementById('f-status').value = p.status;
+    document.getElementById('f-protein').value = p.protein || '';
+    document.getElementById('f-date').value = p.date || '';
+    document.getElementById('f-ingredients').value = p.ingredients || '';
+    document.getElementById('f-caption').value = p.caption || '';
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+  document.getElementById('modal').addEventListener('click', e => { if(e.target === e.currentTarget) closeModal(); });
+
+  function savePost() {
+    const name = document.getElementById('f-name').value.trim();
+    if(!name) { alert('Recipe name is required.'); return; }
+    const post = {
+      id: editingId || Date.now(),
+      name,
+      format: document.getElementById('f-format').value,
+      status: document.getElementById('f-status').value,
+      protein: document.getElementById('f-protein').value,
+      date: document.getElementById('f-date').value,
+      ingredients: document.getElementById('f-ingredients').value,
+      caption: document.getElementById('f-caption').value,
+    };
+    if(editingId) {
+      const idx = posts.findIndex(p=>p.id===editingId);
+      if(idx > -1) posts[idx] = post;
+    } else {
+      posts.push(post);
+    }
+    save();
+    closeModal();
+    renderAll();
+  }
+
+  function updateStatus(id, newStatus) {
+    const p = posts.find(x=>x.id===id);
+    if(p) { p.status = newStatus; save(); renderPipeline(); updateStats(); }
+  }
+
+  function deletePost(id) {
+    if(!confirm('Delete this post?')) return;
+    posts = posts.filter(p=>p.id!==id);
+    save();
+    renderAll();
+  }
+
+  // ─── TABS ─────────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['posts','pipeline','calendar','ideas','notes'][i]===name));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-'+name).classList.add('active');
+    if(name==='calendar') renderCalendar();
+    if(name==='pipeline') renderPipeline();
+  }
+</script>
+</body>
+</html>
