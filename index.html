@@ -6,72 +6,60 @@
   <title>The Calculated Slacker — Dashboard</title>
   <style>
     :root {
-      --green: #2e7d5e;
-      --green-light: #4caf85;
-      --green-bg: #e8f5ee;
-      --header-bg: #111111;
-      --header-text: #ffffff;
-      --bg: #f5f7f5;
-      --card: #ffffff;
-      --text: #1a2e1a;
-      --text-muted: #6b7c6b;
-      --border: #dce8dc;
-      --radius: 12px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.07);
-      --input-bg: #ffffff;
-      --table-hover: #f5f7f5;
+      --green: #2e7d5e; --green-light: #4caf85; --green-bg: #e8f5ee;
+      --header-bg: #111111; --header-text: #ffffff;
+      --bg: #f5f7f5; --card: #ffffff; --text: #1a2e1a; --text-muted: #6b7c6b;
+      --border: #dce8dc; --radius: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --input-bg: #ffffff; --table-hover: #f5f7f5;
     }
     [data-theme="dark"] {
-      --header-bg: #cc0000;
-      --header-text: #ffffff;
-      --bg: #0f0f0f;
-      --card: #1a1a1a;
-      --text: #e8e8e8;
-      --text-muted: #888888;
-      --border: #2a2a2a;
-      --input-bg: #222222;
-      --table-hover: #222222;
-      --green-bg: #1a2e1a;
+      --header-bg: #cc0000; --bg: #0f0f0f; --card: #1a1a1a;
+      --text: #e8e8e8; --text-muted: #888; --border: #2a2a2a;
+      --input-bg: #222; --table-hover: #222; --green-bg: #1a2e1a;
       --shadow: 0 2px 12px rgba(0,0,0,0.3);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color .2s,color .2s,border-color .2s; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    .header { background: var(--header-bg); color: var(--header-text); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-    .header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.3px; color: var(--header-text); }
-    .header h1 span { opacity: 0.65; font-weight: 400; font-size: 0.9rem; margin-left: 8px; }
+    .header { background: var(--header-bg); color: var(--header-text); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+    .header h1 { font-size: 1.3rem; font-weight: 700; color: var(--header-text); }
+    .header h1 span { opacity: .65; font-weight: 400; font-size: .9rem; margin-left: 8px; }
     .header-right { display: flex; align-items: center; gap: 12px; }
-    .header-date { font-size: 0.8rem; opacity: 0.65; }
-    .theme-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-weight: 600; }
-    .theme-toggle:hover { background: rgba(255,255,255,0.25); }
+    .header-date { font-size: .78rem; opacity: .65; }
+    .theme-toggle { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: .78rem; font-weight: 600; }
 
-    .main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+    .main { max-width: 1280px; margin: 0 auto; padding: 22px 20px; }
 
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
-    .stat-card { background: var(--card); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); border-left: 4px solid var(--green); }
+    .stats-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 13px; margin-bottom: 22px; }
+    .stat-card { background: var(--card); border-radius: var(--radius); padding: 15px 17px; box-shadow: var(--shadow); border-left: 4px solid var(--green); }
     .stat-card.red { border-left-color: #cc0000; }
-    .stat-card .label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-    .stat-card .value { font-size: 1.7rem; font-weight: 700; color: var(--text); }
-    .stat-card .sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .stat-card .label { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .stat-card .value { font-size: 1.65rem; font-weight: 700; }
+    .stat-card .sub { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
 
-    .section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 22px; overflow: hidden; }
-    .section-header { padding: 16px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .section-header h2 { font-size: 0.95rem; font-weight: 600; }
+    .section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+    .section-header { padding: 15px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .section-header h2 { font-size: .95rem; font-weight: 600; }
     .section-body { padding: 18px 22px; }
 
-    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.83rem; font-weight: 600; transition: all 0.15s; }
+    .btn { padding: 7px 15px; border-radius: 8px; border: none; cursor: pointer; font-size: .82rem; font-weight: 600; transition: all .15s; }
     .btn-black { background: #111; color: white; }
     .btn-black:hover { background: #333; }
     [data-theme="dark"] .btn-black { background: #cc0000; }
     [data-theme="dark"] .btn-black:hover { background: #aa0000; }
-    .btn-sm { padding: 5px 10px; font-size: 0.75rem; }
+    .btn-sm { padding: 4px 9px; font-size: .73rem; }
     .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); }
     .btn-outline:hover { border-color: var(--green); color: var(--green); }
     .btn-danger { background: transparent; border: 1.5px solid #fcc; color: #c0392b; }
     .btn-danger:hover { background: #fee; }
-    .btn-copy { background: var(--green-bg); border: none; color: var(--green); padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
+    .btn-copy { background: var(--green-bg); border: none; color: var(--green); padding: 3px 9px; border-radius: 5px; font-size: .7rem; font-weight: 600; cursor: pointer; }
 
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+    .fmt { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: .68rem; font-weight: 700; }
+    .fmt-reel { background: #fce4ec; color: #c2185b; }
+    .fmt-carousel { background: #e8eaf6; color: #3949ab; }
+    .fmt-static { background: #f9fbe7; color: #558b2f; }
+    .fmt-story { background: #fff8e1; color: #f57f17; }
+
     .badge-idea { background: #eef; color: #555; }
     .badge-shoot { background: #fff3e0; color: #e65100; }
     .badge-edit { background: #e3f2fd; color: #1565c0; }
@@ -79,13 +67,8 @@
     .badge-scheduled { background: #e8f5e9; color: #2e7d32; }
     .badge-posted { background: #2e7d5e; color: white; }
 
-    .fmt { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
-    .fmt-reel { background: #fce4ec; color: #c2185b; }
-    .fmt-carousel { background: #e8eaf6; color: #3949ab; }
-    .fmt-static { background: #f9fbe7; color: #558b2f; }
-
-    .macro-strip { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
-    .macro-pill { font-size: 0.69rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+    .macro-strip { display: flex; gap: 5px; margin-top: 3px; flex-wrap: wrap; }
+    .macro-pill { font-size: .67rem; font-weight: 600; padding: 2px 6px; border-radius: 4px; }
     .macro-p { background: #e8f5ee; color: #2e7d5e; }
     .macro-c { background: #fff3e0; color: #e65100; }
     .macro-f { background: #fce4ec; color: #c2185b; }
@@ -95,121 +78,125 @@
     [data-theme="dark"] .macro-f { background: #2a0a1a; color: #f06292; }
     [data-theme="dark"] .macro-cal { background: #1a0a2a; color: #ce93d8; }
 
-    .post-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    .post-table th { text-align: left; padding: 10px 12px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); border-bottom: 1.5px solid var(--border); }
-    .post-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .post-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    .post-table th { text-align: left; padding: 9px 11px; font-size: .68rem; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); border-bottom: 1.5px solid var(--border); }
+    .post-table td { padding: 10px 11px; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .post-table tr:last-child td { border-bottom: none; }
     .post-table tr:hover td { background: var(--table-hover); }
-    .recipe-name { font-weight: 600; }
-    .recipe-preview { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-    .actions { display: flex; gap: 5px; }
+    .recipe-name { font-weight: 600; font-size: .88rem; }
+    .recipe-preview { font-size: .73rem; color: var(--text-muted); margin-top: 2px; }
+    .actions { display: flex; gap: 4px; }
+    .status-select { border: none; background: transparent; cursor: pointer; font-weight: 600; font-size: .68rem; text-transform: uppercase; padding: 3px 6px; border-radius: 20px; }
 
-    .status-select { border: none; background: transparent; cursor: pointer; font-weight: 600; font-size: 0.7rem; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; }
-
-    .expand-content { display: none; padding: 0 14px 14px; }
+    .expand-content { display: none; padding: 0 13px 13px; }
     .expand-content.open { display: block; }
-    .expand-tabs { display: flex; gap: 8px; margin-bottom: 10px; padding-top: 10px; }
-    .expand-tab { padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); color: var(--text-muted); background: var(--card); }
+    .expand-tabs { display: flex; gap: 8px; padding-top: 10px; margin-bottom: 10px; }
+    .expand-tab { padding: 3px 11px; border-radius: 20px; font-size: .7rem; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); color: var(--text-muted); background: var(--card); }
     .expand-tab.active { background: #111; color: white; border-color: #111; }
     [data-theme="dark"] .expand-tab.active { background: #cc0000; border-color: #cc0000; }
 
-    .recipe-viewer { background: var(--bg); border-radius: 10px; padding: 14px 16px; }
-    .recipe-section-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 6px; margin-top: 10px; }
+    .recipe-viewer { background: var(--bg); border-radius: 10px; padding: 13px 15px; }
+    .recipe-section-title { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); margin: 9px 0 5px; }
     .recipe-section-title:first-child { margin-top: 0; }
-    .recipe-text { font-size: 0.83rem; line-height: 1.65; color: var(--text); white-space: pre-wrap; }
+    .recipe-text { font-size: .82rem; line-height: 1.65; color: var(--text); white-space: pre-wrap; }
 
-    .caption-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
-    .caption-box-header { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .caption-option { margin-bottom: 14px; }
+    .caption-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; margin-top: 10px; }
+    .caption-box-header { font-size: .72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 11px; }
+    .caption-option { margin-bottom: 13px; }
     .caption-option:last-child { margin-bottom: 0; }
-    .caption-lang { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; }
-    .lang-en { color: #3949ab; }
-    .lang-hi { color: #cc0000; }
-    .caption-text { font-size: 0.83rem; line-height: 1.55; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; white-space: pre-wrap; }
+    .caption-lang { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+    .lang-en { color: #3949ab; } .lang-hi { color: #cc0000; }
+    .caption-text { font-size: .82rem; line-height: 1.5; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 7px; padding: 9px 11px; white-space: pre-wrap; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: flex-start; justify-content: center; z-index: 1000; padding: 20px; overflow-y: auto; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: none; align-items: flex-start; justify-content: center; z-index: 1000; padding: 18px; overflow-y: auto; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--card); border-radius: 16px; padding: 26px; width: 620px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); margin: auto; }
-    .modal h3 { font-size: 1.05rem; margin-bottom: 16px; }
-    .modal-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-    .modal-tab { padding: 8px 16px; font-size: 0.82rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px; }
+    .modal { background: var(--card); border-radius: 16px; padding: 24px; width: 640px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.25); margin: auto; }
+    .modal h3 { font-size: 1.05rem; margin-bottom: 15px; }
+    .modal-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
+    .modal-tab { padding: 7px 15px; font-size: .82rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
     .modal-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
     .modal-tab-content { display: none; }
     .modal-tab-content.active { display: block; }
-    .form-row { margin-bottom: 13px; }
-    .form-row label { display: block; font-size: 0.73rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
-    .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 9px 11px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem; font-family: inherit; color: var(--text); background: var(--input-bg); }
+    .form-row { margin-bottom: 12px; }
+    .form-row label { display: block; font-size: .72rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .3px; }
+    .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 7px; font-size: .86rem; font-family: inherit; color: var(--text); background: var(--input-bg); }
     .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--green); }
-    .form-row textarea { resize: vertical; min-height: 80px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
-    .form-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+    .form-row textarea { resize: vertical; min-height: 75px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 9px; }
     .full-col { grid-column: 1/-1; }
-    .macro-label { font-size: 0.73rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 8px; }
-    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+    .macro-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin: 11px 0 7px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 16px; }
 
-    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 22px; overflow-x: auto; }
-    .tab { padding: 11px 18px; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; margin-bottom: -1px; white-space: nowrap; }
+    .tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 22px; overflow-x: auto; }
+    .tab { padding: 10px 17px; font-size: .84rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
     .tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    .pipeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-    .pipeline-col { background: var(--bg); border-radius: 8px; padding: 10px; }
-    .pipeline-col-header { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .pipeline-count { background: var(--card); color: var(--text); padding: 1px 7px; border-radius: 10px; font-size: 0.68rem; }
-    .pipeline-item { background: var(--card); border-radius: 6px; padding: 8px 10px; margin-bottom: 6px; font-size: 0.77rem; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
-    .pipeline-item .pi-name { font-weight: 600; margin-bottom: 3px; }
-    .pipeline-item .pi-meta { color: var(--text-muted); font-size: 0.7rem; }
+    .pipeline { display: grid; grid-template-columns: repeat(6,1fr); gap: 9px; }
+    .pipeline-col { background: var(--bg); border-radius: 8px; padding: 9px; }
+    .pipeline-col-header { font-size: .68rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px; display: flex; justify-content: space-between; }
+    .pipeline-count { background: var(--card); color: var(--text); padding: 1px 6px; border-radius: 9px; font-size: .66rem; }
+    .pipeline-item { background: var(--card); border-radius: 6px; padding: 7px 9px; margin-bottom: 5px; font-size: .75rem; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .pipeline-item .pi-name { font-weight: 600; margin-bottom: 2px; font-size: .77rem; }
+    .pipeline-item .pi-meta { color: var(--text-muted); font-size: .68rem; }
 
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-    .cal-day { min-height: 78px; background: var(--bg); border-radius: 8px; padding: 7px; font-size: 0.75rem; }
-    .cal-day .day-num { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    /* Calendar */
+    .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
+    .cal-day { min-height: 90px; background: var(--bg); border-radius: 7px; padding: 6px; font-size: .73rem; }
+    .cal-day .day-num { font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
     .cal-day.today { background: var(--green-bg); border: 2px solid var(--green-light); }
-    .cal-post { background: var(--green); color: white; border-radius: 4px; padding: 2px 5px; font-size: 0.65rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cal-day.launch-day { background: #fff8e1; border: 2px solid #f57f17; }
+    [data-theme="dark"] .cal-day.launch-day { background: #2a1a00; border-color: #f57f17; }
+    .cal-post { border-radius: 3px; padding: 2px 5px; font-size: .63rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white; }
     .cal-post.reel { background: #c2185b; }
     .cal-post.carousel { background: #3949ab; }
+    .cal-post.static { background: #558b2f; }
+    .cal-post.story { background: #f57f17; }
 
+    /* Ideas Bank — rich cards */
     .idea-input-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .idea-input-row input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.86rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
+    .idea-input-row input { flex: 1; padding: 8px 11px; border: 1.5px solid var(--border); border-radius: 7px; font-size: .84rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .idea-input-row input:focus { outline: none; border-color: var(--green); }
-    .ideas-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .idea-tag { background: var(--green-bg); color: var(--green); padding: 5px 13px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 7px; }
-    .idea-tag .del-idea { cursor: pointer; opacity: 0.5; }
-    .idea-tag .del-idea:hover { opacity: 1; }
+    .ideas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 10px; }
+    .idea-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+    .idea-card.rich { border-left: 3px solid var(--green); }
+    .idea-card.simple { border-left: 3px solid #888; }
+    .idea-card-name { font-weight: 600; font-size: .86rem; margin-bottom: 4px; }
+    .idea-card-meta { font-size: .72rem; color: var(--text-muted); margin-bottom: 6px; }
+    .idea-card-caption { font-size: .75rem; color: var(--text); background: var(--card); border-radius: 6px; padding: 6px 8px; margin-bottom: 8px; white-space: pre-wrap; line-height: 1.4; max-height: 80px; overflow: hidden; }
+    .idea-card-actions { display: flex; gap: 6px; }
+    .idea-added { font-size: .65rem; color: var(--text-muted); margin-top: 5px; }
 
-    .hashtag-set { background: var(--bg); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
-    .hashtag-set-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-    .hashtag-set-name { font-weight: 600; font-size: 0.88rem; }
-    .hashtag-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .hashtag-tag { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 0.73rem; color: var(--text-muted); font-family: monospace; }
-    .add-set-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
-    .add-set-form input { flex: 1; padding: 8px 11px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.84rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
+    /* Hashtags */
+    .hashtag-set { background: var(--bg); border-radius: 10px; padding: 13px 15px; margin-bottom: 11px; }
+    .hashtag-set-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+    .hashtag-set-name { font-weight: 600; font-size: .86rem; }
+    .hashtag-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .hashtag-tag { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-size: .71rem; color: var(--text-muted); font-family: monospace; }
+    .add-set-form { display: flex; gap: 8px; margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--border); }
+    .add-set-form input { flex: 1; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 7px; font-size: .83rem; font-family: inherit; background: var(--input-bg); color: var(--text); }
     .add-set-form input:focus { outline: none; border-color: var(--green); }
 
-    .notes-area { width: 100%; min-height: 120px; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.86rem; resize: vertical; color: var(--text); background: var(--input-bg); }
+    .notes-area { width: 100%; min-height: 120px; padding: 11px; border: 1.5px solid var(--border); border-radius: 7px; font-family: inherit; font-size: .84rem; resize: vertical; color: var(--text); background: var(--input-bg); }
     .notes-area:focus { outline: none; border-color: var(--green); }
 
-    .empty { text-align: center; padding: 36px 20px; color: var(--text-muted); font-size: 0.88rem; }
+    .empty { text-align: center; padding: 32px 20px; color: var(--text-muted); font-size: .86rem; }
     .empty .emoji { font-size: 1.8rem; margin-bottom: 7px; }
+    .badge-new { background: #cc0000; color: white; font-size: .62rem; font-weight: 700; padding: 1px 6px; border-radius: 10px; margin-left: 5px; vertical-align: middle; }
 
-    .toast { position: fixed; bottom: 24px; right: 24px; background: #111; color: white; padding: 10px 18px; border-radius: 10px; font-size: 0.83rem; font-weight: 500; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .toast { position: fixed; bottom: 22px; right: 22px; background: #111; color: white; padding: 9px 17px; border-radius: 9px; font-size: .82rem; font-weight: 500; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; }
     .toast.show { opacity: 1; }
 
-    @media (max-width: 768px) {
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .pipeline { grid-template-columns: repeat(3, 1fr); }
-      .form-grid-4 { grid-template-columns: 1fr 1fr; }
-      .header { padding: 14px 16px; }
-      .main { padding: 14px 12px; }
-    }
+    @media(max-width:900px) { .stats-row{grid-template-columns:repeat(3,1fr);} .pipeline{grid-template-columns:repeat(3,1fr);} }
+    @media(max-width:600px) { .stats-row{grid-template-columns:repeat(2,1fr);} .form-grid-4{grid-template-columns:1fr 1fr;} .header{padding:13px 15px;} .main{padding:13px 11px;} }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div>
-    <h1>🥗 The Calculated Slacker <span id="accountName">@thecalculatedslacker</span></h1>
-  </div>
+  <div><h1>🥗 The Calculated Slacker <span id="accountName">@thecalculatedslacker</span></h1></div>
   <div class="header-right">
     <div class="header-date" id="headerDate"></div>
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
@@ -218,10 +205,11 @@
 
 <div class="main">
   <div class="stats-row">
-    <div class="stat-card"><div class="label">Total Posts</div><div class="value" id="stat-total">0</div><div class="sub">All time</div></div>
-    <div class="stat-card"><div class="label">Posted</div><div class="value" id="stat-posted">0</div><div class="sub">Published</div></div>
+    <div class="stat-card"><div class="label">Total Content</div><div class="value" id="stat-total">0</div><div class="sub">All formats</div></div>
+    <div class="stat-card"><div class="label">Posted</div><div class="value" id="stat-posted">0</div><div class="sub">Live</div></div>
     <div class="stat-card red"><div class="label">In Pipeline</div><div class="value" id="stat-pipeline">0</div><div class="sub">Idea → Scheduled</div></div>
-    <div class="stat-card red"><div class="label">This Week</div><div class="value" id="stat-week">0</div><div class="sub">Scheduled / Posted</div></div>
+    <div class="stat-card red"><div class="label">This Week</div><div class="value" id="stat-week">0</div><div class="sub">Scheduled</div></div>
+    <div class="stat-card"><div class="label">Ideas Bank</div><div class="value" id="stat-ideas">0</div><div class="sub">Ready to use</div></div>
   </div>
 
   <div class="section">
@@ -229,7 +217,7 @@
       <div class="tab active" onclick="switchTab('posts')">📋 Posts</div>
       <div class="tab" onclick="switchTab('pipeline')">🔄 Pipeline</div>
       <div class="tab" onclick="switchTab('calendar')">📅 Calendar</div>
-      <div class="tab" onclick="switchTab('ideas')">💡 Ideas</div>
+      <div class="tab" onclick="switchTab('ideas')">💡 Ideas <span class="badge-new" id="ideas-badge" style="display:none;">0</span></div>
       <div class="tab" onclick="switchTab('hashtags')">🏷️ Hashtags</div>
       <div class="tab" onclick="switchTab('notes')">📝 Notes</div>
     </div>
@@ -238,11 +226,16 @@
     <div id="tab-posts" class="tab-content active">
       <div class="section-header">
         <h2>All Posts</h2>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <select id="filterStatus" onchange="renderPosts()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:0.8rem;color:var(--text-muted);background:var(--input-bg);">
-            <option value="">All Statuses</option>
+        <div style="display:flex;gap:7px;align-items:center;">
+          <select id="filterStatus" onchange="renderPosts()" style="padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:.78rem;color:var(--text-muted);background:var(--input-bg);">
+            <option value="">All</option>
             <option value="idea">Idea</option><option value="shoot">Shoot</option><option value="edit">Edit</option>
             <option value="caption">Caption</option><option value="scheduled">Scheduled</option><option value="posted">Posted</option>
+          </select>
+          <select id="filterFormat" onchange="renderPosts()" style="padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:.78rem;color:var(--text-muted);background:var(--input-bg);">
+            <option value="">All Formats</option>
+            <option value="Reel">Reel</option><option value="Static">Static</option>
+            <option value="Carousel">Carousel</option><option value="Story">Story</option>
           </select>
           <button class="btn btn-black" onclick="openModal()">+ Add Post</button>
         </div>
@@ -260,20 +253,25 @@
     <div id="tab-calendar" class="tab-content">
       <div class="section-header">
         <h2 id="calMonthLabel">Calendar</h2>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:7px;align-items:center;">
+          <div style="display:flex;gap:6px;align-items:center;font-size:.72rem;color:var(--text-muted);">
+            <span style="width:10px;height:10px;background:#c2185b;border-radius:2px;display:inline-block;"></span>Reel
+            <span style="width:10px;height:10px;background:#558b2f;border-radius:2px;display:inline-block;"></span>Static
+            <span style="width:10px;height:10px;background:#f57f17;border-radius:2px;display:inline-block;"></span>Story
+          </div>
           <button class="btn btn-outline btn-sm" onclick="changeMonth(-1)">← Prev</button>
           <button class="btn btn-outline btn-sm" onclick="changeMonth(1)">Next →</button>
         </div>
       </div>
       <div class="section-body">
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;">
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">SUN</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">MON</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">TUE</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">WED</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">THU</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">FRI</div>
-          <div style="text-align:center;font-size:0.68rem;font-weight:700;color:var(--text-muted);">SAT</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:5px;">
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">SUN</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">MON</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">TUE</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">WED</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">THU</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">FRI</div>
+          <div style="text-align:center;font-size:.66rem;font-weight:700;color:var(--text-muted);">SAT</div>
         </div>
         <div class="calendar-grid" id="calendar-grid"></div>
       </div>
@@ -281,25 +279,28 @@
 
     <!-- IDEAS -->
     <div id="tab-ideas" class="tab-content">
-      <div class="section-header"><h2>Ideas Bank</h2><span style="font-size:0.8rem;color:var(--text-muted);">Click an idea to convert to a post</span></div>
+      <div class="section-header">
+        <h2>Ideas Bank</h2>
+        <span style="font-size:.78rem;color:var(--text-muted);">Daily suggestions from automation + your own ideas. Click Convert to schedule.</span>
+      </div>
       <div class="section-body">
         <div class="idea-input-row">
-          <input type="text" id="ideaInput" placeholder="e.g. High protein rajma bowl..." onkeydown="if(event.key==='Enter')addIdea()" />
-          <button class="btn btn-black" onclick="addIdea()">Add</button>
+          <input type="text" id="ideaInput" placeholder="Add a quick idea (e.g. 'Sattu overnight oats')..." onkeydown="if(event.key==='Enter')addSimpleIdea()" />
+          <button class="btn btn-black" onclick="addSimpleIdea()">Add Idea</button>
         </div>
-        <div class="ideas-list" id="ideas-list"></div>
+        <div class="ideas-grid" id="ideas-list"></div>
       </div>
     </div>
 
     <!-- HASHTAGS -->
     <div id="tab-hashtags" class="tab-content">
-      <div class="section-header"><h2>Hashtag Sets</h2><span style="font-size:0.8rem;color:var(--text-muted);">One-click copy for any content type</span></div>
+      <div class="section-header"><h2>Hashtag Sets</h2><span style="font-size:.78rem;color:var(--text-muted);">One-click copy</span></div>
       <div class="section-body">
         <div id="hashtag-sets"></div>
         <div class="add-set-form">
-          <input type="text" id="newSetName" placeholder="Set name (e.g. High Protein Reels)" style="max-width:200px;" />
+          <input type="text" id="newSetName" placeholder="Set name" style="max-width:180px;" />
           <input type="text" id="newSetTags" placeholder="#highprotein #indianfood ..." />
-          <button class="btn btn-black btn-sm" onclick="addHashtagSet()">Add Set</button>
+          <button class="btn btn-black btn-sm" onclick="addHashtagSet()">Add</button>
         </div>
       </div>
     </div>
@@ -309,9 +310,7 @@
       <div class="section-header"><h2>Channel Notes</h2></div>
       <div class="section-body">
         <textarea class="notes-area" id="notesArea" placeholder="Content pillars, brand voice, strategy, posting schedule..."></textarea>
-        <div style="margin-top:8px;display:flex;justify-content:flex-end;">
-          <button class="btn btn-black btn-sm" onclick="saveNotes()">Save Notes</button>
-        </div>
+        <div style="margin-top:8px;display:flex;justify-content:flex-end;"><button class="btn btn-black btn-sm" onclick="saveNotes()">Save Notes</button></div>
       </div>
     </div>
   </div>
@@ -326,36 +325,23 @@
       <div class="modal-tab" onclick="switchModalTab('recipe')">🍳 Recipe</div>
       <div class="modal-tab" onclick="switchModalTab('caption')">✍️ Caption</div>
     </div>
-
     <div class="modal-tab-content active" id="mtab-details">
       <div class="form-grid">
-        <div class="form-row full-col">
-          <label>Recipe / Dish Name *</label>
-          <input type="text" id="f-name" placeholder="e.g. Paneer Bhurji Protein Bowl" />
-        </div>
-        <div class="form-row">
-          <label>Format</label>
+        <div class="form-row full-col"><label>Recipe / Post Name *</label><input type="text" id="f-name" placeholder="e.g. Paneer Tikka Power Bowl" /></div>
+        <div class="form-row"><label>Format</label>
           <select id="f-format">
-            <option value="Reel">🎬 Reel</option>
-            <option value="Carousel">🎠 Carousel</option>
-            <option value="Static">📷 Static</option>
+            <option value="Reel">🎬 Reel</option><option value="Static">📷 Static</option>
+            <option value="Carousel">🎠 Carousel</option><option value="Story">📱 Story</option>
           </select>
         </div>
-        <div class="form-row">
-          <label>Status</label>
+        <div class="form-row"><label>Status</label>
           <select id="f-status">
             <option value="idea">Idea</option><option value="shoot">Shoot</option><option value="edit">Edit</option>
             <option value="caption">Caption</option><option value="scheduled">Scheduled</option><option value="posted">Posted</option>
           </select>
         </div>
-        <div class="form-row">
-          <label>Scheduled Date</label>
-          <input type="date" id="f-date" />
-        </div>
-        <div class="form-row">
-          <label>Key Ingredients (brief)</label>
-          <input type="text" id="f-ingredients" placeholder="e.g. Paneer, Eggs, Chickpeas" />
-        </div>
+        <div class="form-row"><label>Scheduled Date</label><input type="date" id="f-date" /></div>
+        <div class="form-row"><label>Key Ingredients</label><input type="text" id="f-ingredients" placeholder="e.g. Paneer, Eggs, Chickpeas" /></div>
       </div>
       <div class="macro-label">Macros per serving</div>
       <div class="form-grid-4">
@@ -365,31 +351,14 @@
         <div class="form-row"><label>Calories</label><input type="number" id="f-calories" placeholder="420" /></div>
       </div>
     </div>
-
     <div class="modal-tab-content" id="mtab-recipe">
-      <div class="form-row">
-        <label>Ingredients (with quantities)</label>
-        <textarea id="f-recipe-ingredients" style="min-height:130px;" placeholder="200g paneer, crumbled&#10;3 eggs&#10;1 tsp cumin seeds&#10;1 cup bell peppers, diced&#10;Salt, turmeric, chilli to taste"></textarea>
-      </div>
-      <div class="form-row">
-        <label>Method / Steps</label>
-        <textarea id="f-recipe-method" style="min-height:160px;" placeholder="1. Heat oil in a pan&#10;2. Add cumin seeds&#10;3. Sauté bell peppers 2 mins&#10;4. Add paneer and eggs, scramble&#10;5. Season and serve hot"></textarea>
-      </div>
-      <div class="form-row">
-        <label>Prep + Cook Time</label>
-        <input type="text" id="f-prep-time" placeholder="e.g. 10 mins prep, 15 mins cook" />
-      </div>
+      <div class="form-row"><label>Ingredients (with quantities)</label><textarea id="f-recipe-ingredients" style="min-height:120px;" placeholder="200g paneer, crumbled&#10;3 eggs&#10;1 tsp cumin seeds..."></textarea></div>
+      <div class="form-row"><label>Method / Steps</label><textarea id="f-recipe-method" style="min-height:150px;" placeholder="1. Heat oil&#10;2. Add cumin..."></textarea></div>
+      <div class="form-row"><label>Prep + Cook Time</label><input type="text" id="f-prep-time" placeholder="e.g. 10 mins prep, 15 mins cook" /></div>
     </div>
-
     <div class="modal-tab-content" id="mtab-caption">
-      <div class="form-row">
-        <label>Your Caption</label>
-        <textarea id="f-caption" placeholder="Write or paste your caption here..."></textarea>
-      </div>
-      <div style="margin-bottom:10px;">
-        <button class="btn btn-black btn-sm" onclick="generateCaptions()">✨ Generate Suggestions</button>
-        <span style="font-size:0.75rem;color:var(--text-muted);margin-left:8px;">Based on your recipe details</span>
-      </div>
+      <div class="form-row"><label>Your Caption</label><textarea id="f-caption" placeholder="Write or paste your caption..."></textarea></div>
+      <div style="margin-bottom:9px;"><button class="btn btn-black btn-sm" onclick="generateCaptions()">✨ Generate Suggestions</button><span style="font-size:.73rem;color:var(--text-muted);margin-left:7px;">Uses recipe name + macros</span></div>
       <div id="caption-suggestions" style="display:none;">
         <div class="caption-box">
           <div class="caption-box-header">✨ Caption Suggestions</div>
@@ -404,7 +373,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
       <button class="btn btn-black" onclick="savePost()">Save Post</button>
@@ -415,351 +383,365 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  let posts = JSON.parse(localStorage.getItem('ig_posts_v2') || '[]');
-  let ideas = JSON.parse(localStorage.getItem('ig_ideas') || '[]');
-  let hashtagSets = JSON.parse(localStorage.getItem('ig_hashtags') || '[]');
-  let editingId = null;
-  let calendarDate = new Date();
-  let expandedRows = {};
+// ─── SCHEDULED IDEAS (auto-updated daily at 10AM) ───────────
+// SCHEDULED_IDEAS_START
+window._scheduledIdeas = [];
+// SCHEDULED_IDEAS_END
 
-  const STATUSES = ['idea','shoot','edit','caption','scheduled','posted'];
-  const STATUS_LABELS = { idea:'Idea', shoot:'Shoot', edit:'Edit', caption:'Caption', scheduled:'Scheduled', posted:'Posted' };
-  const STATUS_COLORS = { idea:'badge-idea', shoot:'badge-shoot', edit:'badge-edit', caption:'badge-caption', scheduled:'badge-scheduled', posted:'badge-posted' };
+// ─── DATA ────────────────────────────────────────────────────
+let posts = JSON.parse(localStorage.getItem('ig_posts_v3') || '[]');
+let ideas = JSON.parse(localStorage.getItem('ig_ideas_v2') || '[]');
+let hashtagSets = JSON.parse(localStorage.getItem('ig_hashtags') || '[]');
+let editingId = null;
+let calendarDate = new Date();
+let expandedRows = {};
 
-  function save() { localStorage.setItem('ig_posts_v2', JSON.stringify(posts)); updateStats(); }
-  function saveIdeas() { localStorage.setItem('ig_ideas', JSON.stringify(ideas)); }
-  function saveHashtags() { localStorage.setItem('ig_hashtags', JSON.stringify(hashtagSets)); }
-  function saveNotes() { localStorage.setItem('ig_notes', document.getElementById('notesArea').value); showToast('Notes saved ✓'); }
+const STATUSES = ['idea','shoot','edit','caption','scheduled','posted'];
+const STATUS_LABELS = {idea:'Idea',shoot:'Shoot',edit:'Edit',caption:'Caption',scheduled:'Scheduled',posted:'Posted'};
+const STATUS_COLORS = {idea:'badge-idea',shoot:'badge-shoot',edit:'badge-edit',caption:'badge-caption',scheduled:'badge-scheduled',posted:'badge-posted'};
 
-  function toggleTheme() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const t = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', t);
-    localStorage.setItem('ig_theme', t);
-    document.getElementById('themeBtn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
+function save() { localStorage.setItem('ig_posts_v3', JSON.stringify(posts)); updateStats(); }
+function saveIdeas() { localStorage.setItem('ig_ideas_v2', JSON.stringify(ideas)); updateStats(); }
+function saveHashtags() { localStorage.setItem('ig_hashtags', JSON.stringify(hashtagSets)); }
+function saveNotes() { localStorage.setItem('ig_notes', document.getElementById('notesArea').value); showToast('Notes saved ✓'); }
+
+// ─── THEME ───────────────────────────────────────────────────
+function toggleTheme() {
+  const d = document.documentElement.getAttribute('data-theme') === 'dark';
+  const t = d ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('ig_theme', t);
+  document.getElementById('themeBtn').textContent = d ? '🌙 Dark' : '☀️ Light';
+}
+
+// ─── INIT ────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('ig_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️ Light' : '🌙 Dark';
+  document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-IN',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  document.getElementById('notesArea').value = localStorage.getItem('ig_notes') || '';
+
+  if (!posts.length) seedCalendar();
+  if (!hashtagSets.length) seedHashtags();
+
+  // Merge scheduled ideas (from daily automation)
+  mergeScheduledIdeas();
+
+  renderAll();
+});
+
+function mergeScheduledIdeas() {
+  if (!window._scheduledIdeas || !window._scheduledIdeas.length) return;
+  const existingNames = ideas.filter(i => i.name).map(i => i.name.toLowerCase());
+  const newOnes = window._scheduledIdeas.filter(si => !existingNames.includes(si.name.toLowerCase()));
+  if (newOnes.length) {
+    ideas = [...newOnes, ...ideas];
+    saveIdeas();
+    showToast(`✨ ${newOnes.length} new recipe ideas added!`);
   }
+}
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('ig_theme') || 'light';
-    document.documentElement.setAttribute('data-theme', saved);
-    document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️ Light' : '🌙 Dark';
-    document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
-    document.getElementById('notesArea').value = localStorage.getItem('ig_notes') || '';
-    if (!posts.length) addSampleData();
-    if (!hashtagSets.length) addDefaultHashtags();
-    renderAll();
-  });
+// ─── SEED DATA ───────────────────────────────────────────────
+function seedHashtags() {
+  hashtagSets = [
+    {id:1, name:'High Protein Reels', tags:'#highprotein #proteinrecipes #indianfitness #fitnessfood #gymfood #highproteinmeals #proteinpacked #fitnessrecipes #healthyindian #proteingoals'},
+    {id:2, name:'Indian Healthy Cooking', tags:'#indianfood #healthyindianfood #indianrecipes #desifit #indiandiet #healthycooking #fitindia #cleaneatsindia #indianmealprep #homecooking'},
+    {id:3, name:'Meal Prep', tags:'#mealprep #mealprepping #mealprepindia #weeklymeals #mealprepbowl #mealpreplife #bulkmeals #preppingmeals #fitmeals #mealplan'},
+    {id:4, name:'Stories', tags:'#instastory #dailytip #fitnesstips #proteintip #healthtip #indianfitness #fitfam #healthylifestyle #nutritionadvice #proteingoals'},
+  ];
+  saveHashtags();
+}
 
-  function addDefaultHashtags() {
-    hashtagSets = [
-      { id:1, name:'High Protein Reels', tags:'#highprotein #proteinrecipes #indianfitness #fitnessfood #gymfood #highproteinmeals #proteinpacked #fitnessrecipes #healthyindian #proteingoals' },
-      { id:2, name:'Indian Healthy Cooking', tags:'#indianfood #healthyindianfood #indianrecipes #desifit #indiandiet #healthycooking #fitindia #cleaneatsindia #indianmealprep #homecooking' },
-      { id:3, name:'Meal Prep', tags:'#mealprep #mealprepping #mealprepindia #weeklymeals #mealprepbowl #mealpreplife #bulkmeals #preppingmeals #fitmeals #mealplan' },
-    ];
-    saveHashtags();
-  }
+function seedCalendar() {
+  posts = [
+    // ── WEEK 1: May 16–22 ──
+    {id:101, name:'Paneer Tikka Power Bowl', format:'Reel', status:'idea', protein:'35', carbs:'28', fat:'14', calories:'380', ingredients:'Paneer, Greek Yogurt, Brown Rice, Bell Peppers', date:'2025-05-16', recipeIngredients:'200g paneer, cubed\n4 tbsp Greek yogurt\n1 tsp red chilli powder\n1 tsp garam masala\n1 tsp cumin powder\n1 tsp coriander powder\n½ tsp turmeric\nJuice of 1 lemon\n1 cup cooked brown rice\n1 cup mixed bell peppers\nSalt to taste', recipeMethod:'1. Mix yogurt, spices and lemon juice for marinade\n2. Coat paneer cubes, marinate 30 mins\n3. Grill or pan-fry on high heat until charred, 3-4 mins per side\n4. Sauté bell peppers 2 mins in the same pan\n5. Serve paneer and peppers over brown rice\n6. Drizzle with mint chutney', prepTime:'15 mins prep (+ 30 mins marinate), 15 mins cook', caption:''},
+    {id:102, name:'Crispy Moong Dal Chilla', format:'Static', status:'idea', protein:'22', carbs:'32', fat:'6', calories:'270', ingredients:'Moong Dal, Spinach, Ginger, Green Chilli', date:'2025-05-16', recipeIngredients:'1 cup yellow moong dal (soaked 4 hours)\n½ cup spinach, finely chopped\n1 inch ginger\n1 green chilli\n½ tsp cumin seeds\nSalt to taste\nOil for cooking', recipeMethod:'1. Drain soaked dal, blend with ginger, chilli and water to smooth batter\n2. Stir in spinach, cumin and salt\n3. Heat non-stick pan, add a few drops of oil\n4. Pour a ladle of batter, spread thin like a crepe\n5. Cook 2-3 mins per side until golden and crispy\n6. Serve with green chutney or Greek yogurt', prepTime:'10 mins prep (+ 4 hrs soaking), 15 mins cook', caption:''},
+    {id:103, name:'Story: Why protein? The Indian gap', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-16', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'💡 Most Indians eat only 20-30g protein daily. Recommended: 0.8-1g per kg body weight.\n\nThat\'s why this channel exists — one high-protein Indian recipe at a time.\n\nDrop a 🙋 if you\'re here to level up your protein game!'},
+    {id:104, name:'Classic Rajma Protein Bowl', format:'Static', status:'idea', protein:'28', carbs:'52', fat:'6', calories:'390', ingredients:'Rajma, Brown Rice, Greek Yogurt, Onion', date:'2025-05-17', recipeIngredients:'1 cup rajma (soaked overnight, pressure cooked)\n1 cup brown rice, cooked\n1 onion, finely chopped\n2 tomatoes, pureed\n3 garlic cloves, minced\n1 inch ginger, grated\n1 tsp cumin seeds\n1 tsp coriander powder\n½ tsp garam masala\n½ tsp turmeric\n2 tbsp Greek yogurt (for serving)\nSalt to taste', recipeMethod:'1. Heat oil, splutter cumin seeds\n2. Sauté onion until golden, 8 mins\n3. Add ginger-garlic, cook 2 mins\n4. Add tomato puree and spices, cook until oil separates\n5. Add rajma with ½ cup cooking water, simmer 10 mins\n6. Serve over brown rice with Greek yogurt dollop', prepTime:'20 mins prep, 35 mins cook', caption:''},
+    {id:105, name:'Story: Rajma soaking tip', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-17', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🫘 Rajma pro tip: soak overnight + cook with a bay leaf. Reduces bloating by 30%. Your gut will thank you.\n\nSave this! 📌'},
+    {id:106, name:'Story: Veg or Non-Veg poll', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-18', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'📊 Quick poll — your main protein source?\n\n🥩 Non-Veg (Chicken, Eggs, Fish)\n🌱 Vegetarian (Paneer, Dal, Soy)\n\nVote! Helps me make recipes YOU actually cook 👇'},
+    {id:107, name:'Egg Bhurji Protein Wrap', format:'Reel', status:'idea', protein:'34', carbs:'28', fat:'16', calories:'390', ingredients:'Eggs, Paneer, Whole Wheat Roti, Bell Peppers', date:'2025-05-19', recipeIngredients:'4 whole eggs\n100g paneer, crumbled\n1 large whole wheat roti\n½ cup bell peppers, diced\n1 small onion, finely chopped\n1 tomato, chopped\n1 tsp cumin seeds\n½ tsp turmeric\n½ tsp chilli powder\n1 tsp coriander powder\nFresh coriander\nSalt to taste', recipeMethod:'1. Heat oil, add cumin seeds\n2. Sauté onion 3 mins until soft\n3. Add peppers and tomato, cook 3 mins\n4. Add spices, stir well\n5. Add crumbled paneer, cook 2 mins\n6. Crack in eggs, scramble everything until just set\n7. Warm roti, fill with bhurji, roll up and serve', prepTime:'10 mins prep, 12 mins cook', caption:''},
+    {id:108, name:'Story: Whole egg vs egg white', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-19', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🥚 One whole egg = 6g protein + vitamin D + healthy fats.\n\nThe yolk is NOT the enemy — it carries half the protein and most of the nutrients.\n\nEat the whole egg unless you\'re specifically cutting calories. 💡'},
+    {id:109, name:'Spinach Paneer Scramble', format:'Static', status:'idea', protein:'30', carbs:'12', fat:'18', calories:'330', ingredients:'Paneer, Spinach, Eggs, Garlic', date:'2025-05-20', recipeIngredients:'200g paneer, crumbled\n2 cups baby spinach\n2 eggs\n4 garlic cloves, minced\n1 tsp cumin seeds\n½ tsp turmeric\n½ tsp black pepper\n¼ tsp red chilli flakes\n1 tbsp olive oil\nSalt to taste\nLemon juice to finish', recipeMethod:'1. Heat oil, add cumin and garlic, cook 1 min\n2. Add spinach, wilt on high heat 2 mins\n3. Add crumbled paneer, stir well\n4. Push to one side, crack eggs in\n5. Scramble eggs into paneer-spinach mix\n6. Season and finish with lemon juice', prepTime:'5 mins prep, 10 mins cook', caption:''},
+    {id:110, name:'Story: Kitchen setup', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-20', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🏠 The kitchen behind this channel.\n\nNothing fancy — a non-stick pan, a blender, and a weighing scale. That\'s literally all you need.\n\nWhat\'s your one kitchen essential? Comment below 👇'},
+    {id:111, name:'Soy Chunk Masala Bowl', format:'Reel', status:'idea', protein:'42', carbs:'38', fat:'8', calories:'395', ingredients:'Soy Chunks, Brown Rice, Tomato Gravy', date:'2025-05-21', recipeIngredients:'100g soy chunks (dry weight, rehydrated)\n1 cup brown rice, cooked\n2 tomatoes, pureed\n1 onion, chopped\n3 garlic cloves\n1 tsp garam masala\n1 tsp coriander powder\n½ tsp turmeric\n½ tsp cumin seeds\n1 tbsp oil\nFresh coriander and lemon', recipeMethod:'1. Soak soy chunks in boiling water 10 mins, squeeze dry\n2. Pan-fry until golden and slightly crispy, set aside\n3. Make masala: cumin, onion, garlic, tomato puree, all spices\n4. Cook until oil separates, about 8 mins\n5. Add soy chunks, simmer 5 mins\n6. Serve over brown rice with lemon and coriander', prepTime:'10 mins prep, 20 mins cook', caption:''},
+    {id:112, name:'Greek Yogurt Tikka Marinade', format:'Static', status:'idea', protein:'28', carbs:'10', fat:'10', calories:'240', ingredients:'Chicken Breast, Greek Yogurt, Tikka Spices', date:'2025-05-21', recipeIngredients:'250g chicken breast (or 200g paneer), cubed\n5 tbsp Greek yogurt\n1 tsp Kashmiri red chilli powder\n1 tsp garam masala\n1 tsp coriander powder\n½ tsp turmeric\n½ tsp cumin powder\n1 tbsp ginger-garlic paste\nJuice of 1 lemon\nSalt to taste', recipeMethod:'1. Mix all marinade ingredients until smooth\n2. Coat protein completely\n3. Marinate minimum 1 hour (overnight is best)\n4. Grill, bake at 200°C for 20 mins, or pan-fry until cooked\n5. Finish with lemon squeeze and chaat masala\n6. Serve with green chutney', prepTime:'10 mins prep (+ 1 hr marinate), 20 mins cook', caption:''},
+    {id:113, name:'Story: Soy chunks — most underrated', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-21', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'💥 Soy chunks: 52g protein per 100g dry weight.\n\nMore than chicken. And they\'re ₹60 for 200g.\n\nThe most underrated high-protein ingredient in every Indian kitchen — most people just don\'t know how to cook them right. I\'ll show you tomorrow 👀'},
+    {id:114, name:'Sattu Power Shake', format:'Static', status:'idea', protein:'20', carbs:'38', fat:'4', calories:'265', ingredients:'Sattu, Milk, Banana, Honey, Cardamom', date:'2025-05-22', recipeIngredients:'3 tbsp sattu (roasted chana flour)\n250ml cold milk (dairy or soy)\n1 ripe banana\n1 tbsp honey or jaggery\n¼ tsp cardamom powder\nPinch of black salt (optional)\nIce cubes', recipeMethod:'1. Add all ingredients to blender\n2. Blend on high 30 seconds until smooth\n3. Taste, adjust sweetness\n4. Pour over ice and serve immediately\nSavoury version: skip banana and honey, add black salt, roasted cumin and lemon juice', prepTime:'5 mins', caption:''},
+    {id:115, name:'Story: Sattu — desi protein powder', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-22', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🏋️ Sattu = Bihar\'s original protein powder.\n\nRoasted chana flour: 20-22g protein per 100g, rich in fibre, ₹100 for 500g.\n\nWestern protein powders: ₹3000+ for the same amount.\n\nOur desi options are completely untapped 🔥'},
 
-  function addSampleData() {
-    const d = n => { const x = new Date(); x.setDate(x.getDate()+n); return x.toISOString().split('T')[0]; };
-    posts = [
-      { id:1, name:'High Protein Rajma Bowl', format:'Reel', status:'posted', protein:32, carbs:48, fat:8, calories:390, ingredients:'Rajma, Brown Rice, Greek Yogurt', caption:'Rajma done right 💪', date:d(-3), recipeIngredients:'1 cup rajma (soaked overnight)\n1 cup brown rice\n4 tbsp Greek yogurt\n1 onion, chopped\n2 tomatoes\nCumin, coriander, garam masala', recipeMethod:'1. Pressure cook rajma for 4 whistles\n2. Make masala with onion, tomatoes, spices\n3. Add rajma, simmer 10 mins\n4. Serve over brown rice with yogurt', prepTime:'15 mins prep, 30 mins cook' },
-      { id:2, name:'Paneer Bhurji Protein Bowl', format:'Carousel', status:'scheduled', protein:38, carbs:22, fat:18, calories:410, ingredients:'Paneer, Eggs, Bell Peppers', caption:'', date:d(2), recipeIngredients:'200g paneer, crumbled\n3 eggs\n1 cup bell peppers\n1 tsp cumin\nSpices to taste', recipeMethod:'1. Heat oil, add cumin\n2. Sauté peppers 2 mins\n3. Add paneer and eggs, scramble\n4. Season and serve', prepTime:'10 mins prep, 10 mins cook' },
-      { id:3, name:'Moong Dal Chilla', format:'Reel', status:'edit', protein:22, carbs:30, fat:5, calories:250, ingredients:'Moong Dal, Spinach, Tofu', caption:'', date:d(5), recipeIngredients:'', recipeMethod:'', prepTime:'' },
-      { id:4, name:'Chicken Tikka Salad', format:'Static', status:'shoot', protein:45, carbs:15, fat:10, calories:340, ingredients:'Chicken, Curd, Veggies', caption:'', date:'', recipeIngredients:'', recipeMethod:'', prepTime:'' },
-      { id:5, name:'Sprouts Chaat Remix', format:'Reel', status:'idea', protein:18, carbs:35, fat:3, calories:240, ingredients:'Sprouts, Chickpeas, Pomegranate', caption:'', date:'', recipeIngredients:'', recipeMethod:'', prepTime:'' },
-    ];
-    ideas = ['High protein sabudana', 'Egg bhurji wrap', 'Sattu shake variations', 'Greek yogurt lassi', 'Lentil soup makeover'];
-    save(); saveIdeas();
-  }
+    // ── WEEK 2: May 23–29 ──
+    {id:201, name:'Chicken Tikka Salad Bowl', format:'Reel', status:'idea', protein:'45', carbs:'18', fat:'10', calories:'345', ingredients:'Chicken Breast, Greek Yogurt, Mixed Greens, Cherry Tomatoes', date:'2025-05-23', recipeIngredients:'250g chicken breast\n4 tbsp Greek yogurt\n1 tsp tikka masala\n1 tsp red chilli powder\n½ tsp turmeric\n2 cups mixed greens\n½ cup cherry tomatoes, halved\n½ cucumber, sliced\n¼ red onion, sliced\nDressing: 2 tbsp yogurt + lemon juice + chaat masala\nSalt to taste', recipeMethod:'1. Marinate chicken in yogurt and spices 30 mins\n2. Grill or pan-sear on high heat, 5-6 mins per side\n3. Rest 5 mins, slice thin\n4. Assemble salad: greens, tomatoes, cucumber, onion\n5. Top with sliced tikka chicken\n6. Drizzle yogurt dressing and serve', prepTime:'10 mins prep (+ 30 mins marinate), 15 mins cook', caption:''},
+    {id:202, name:'Protein Sprouts Chaat', format:'Static', status:'idea', protein:'18', carbs:'38', fat:'3', calories:'255', ingredients:'Mixed Sprouts, Chickpeas, Pomegranate, Chaat Masala', date:'2025-05-23', recipeIngredients:'1 cup mixed sprouts (moong, matki, masoor)\n½ cup boiled chickpeas\n¼ cup pomegranate seeds\n1 small onion, finely chopped\n1 tomato, chopped\n1 green chilli, chopped\n½ tsp chaat masala\n½ tsp cumin powder\nBlack salt and lemon juice\nFresh coriander', recipeMethod:'1. Boil sprouts lightly 3-4 mins — keep them crunchy\n2. Drain and cool completely\n3. Mix with chickpeas, onion, tomato, green chilli\n4. Season with chaat masala, cumin, black salt\n5. Add lemon juice and toss well\n6. Top with pomegranate seeds and coriander\n7. Serve immediately', prepTime:'10 mins (+ sprouting time)', caption:''},
+    {id:203, name:'Story: How to sprout at home', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-23', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🌱 How to sprout at home:\n1. Soak moong/matki overnight\n2. Drain, wrap in damp cloth\n3. Keep in warm spot 24-48 hrs\n4. Live, protein-rich sprouts ready 🙌\n\nCost: ₹10. Protein: 18g per cup.\nDrop a ✅ if you\'re trying this!'},
+    {id:204, name:'Desi Quinoa + Dal Power Bowl', format:'Static', status:'idea', protein:'32', carbs:'46', fat:'8', calories:'385', ingredients:'Quinoa, Toor Dal, Roasted Veggies, Ghee Tadka', date:'2025-05-24', recipeIngredients:'¾ cup quinoa, rinsed\n1 cup toor dal, cooked\n1 cup mixed veg (carrot, zucchini, broccoli)\n1 tsp cumin seeds\n2 garlic cloves\n½ tsp turmeric\n1 tsp coriander powder\n½ tsp garam masala\n1 tbsp ghee (for tadka)\nLemon juice and coriander to garnish', recipeMethod:'1. Cook quinoa in 1.5 cups water, 15 mins\n2. Cook dal with turmeric until soft\n3. Roast vegetables at 200°C with oil and spices, 20 mins\n4. Make tadka: heat ghee, add cumin and garlic until golden\n5. Add tadka to cooked dal, stir\n6. Build your bowl: quinoa base, dal, roasted veg, garnish', prepTime:'15 mins prep, 30 mins cook', caption:''},
+    {id:205, name:'Story: Quinoa vs Brown Rice', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-24', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'📊 Per 100g cooked:\n\nQuinoa: 4g protein, 21g carbs, complete amino acids ✅\nBrown Rice: 2.5g protein, 23g carbs\n\nCombine either with dal = complete protein. Both are great. Save this! 🔖'},
+    {id:206, name:'Story: Recipe vote — next week', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-25', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🗳️ Vote — what should I make next week?\n\nA) Egg white pizza with Indian toppings 🍕\nB) Sattu energy balls (no-bake) 🟡\nC) High-protein dahi rice bowl 🍚\nD) Paneer cottage cheese tacos 🌮\n\nWinning recipe goes live Monday 🔥'},
+    {id:207, name:'Masala Omelette Roti Wrap', format:'Reel', status:'idea', protein:'30', carbs:'28', fat:'16', calories:'370', ingredients:'Eggs, Whole Wheat Roti, Onion, Tomato, Coriander', date:'2025-05-26', recipeIngredients:'4 large eggs\n1 whole wheat roti\n1 onion, finely chopped\n1 tomato, finely chopped\n1-2 green chillies, chopped\nHandful fresh coriander\n½ tsp turmeric\n½ tsp cumin powder\n¼ tsp black pepper\nSalt to taste\n1 tsp oil', recipeMethod:'1. Beat eggs with salt, turmeric, cumin and pepper\n2. Mix in onion, tomato, chilli and coriander\n3. Heat oil in non-stick pan on medium\n4. Pour egg mix, cook 2-3 mins until bottom sets\n5. Flip carefully, cook 1 more min\n6. Warm roti, place omelette inside, roll tightly\n7. Cut in half, serve with chutney', prepTime:'5 mins prep, 8 mins cook', caption:''},
+    {id:208, name:'Story: 4-5 eggs a day — myth or fine?', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-26', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🥚 Can you eat 4-5 eggs daily?\n\nFor most healthy people, yes. Recent studies show dietary cholesterol from eggs has minimal impact on blood cholesterol for ~70% of people.\n\nBut get your levels checked if eating 4+ daily. Individual variation matters.\n\nDrop ❓ for a full breakdown!'},
+    {id:209, name:'Besan Chilla with Tofu Filling', format:'Static', status:'idea', protein:'26', carbs:'30', fat:'8', calories:'295', ingredients:'Besan, Firm Tofu, Bell Peppers, Spinach', date:'2025-05-27', recipeIngredients:'1 cup besan (chickpea flour)\n150g firm tofu, crumbled and pressed\n½ cup spinach, chopped\n½ cup bell peppers, diced\n½ tsp turmeric\n½ tsp cumin\n½ tsp coriander powder\n1 green chilli, chopped\nSalt and water to make batter', recipeMethod:'1. Whisk besan with water and spices to smooth batter\n2. Mix in spinach and chilli\n3. Heat pan, add few drops oil\n4. Pour ladle of batter, spread thin\n5. After 2 mins, add tofu and peppers on one half\n6. Fold and press, cook 1 more min until crispy\n7. Serve with mint yogurt dip', prepTime:'10 mins prep, 15 mins cook', caption:''},
+    {id:210, name:'Story: Tofu 101 for Indians', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-27', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🧱 Tofu doesn\'t have to be boring.\n\nThe trick: press it 30 mins to remove water, then pan-fry on HIGH heat until crispy. It absorbs any masala you throw at it.\n\nPaneer\'s lighter, slightly lower-calorie cousin. 15g protein per 100g.\n\nSave this tip! 📌'},
+    {id:211, name:'Tikka Paneer Quesadilla', format:'Reel', status:'idea', protein:'32', carbs:'36', fat:'18', calories:'430', ingredients:'Paneer, Whole Wheat Tortilla, Bell Peppers, Tikka Spices', date:'2025-05-28', recipeIngredients:'200g paneer, cubed\n2 whole wheat tortillas\n1 cup bell peppers, sliced\n¼ cup red onion, sliced\n30g mozzarella, shredded\n3 tbsp Greek yogurt\n1 tsp tikka masala\n½ tsp chilli powder\n½ tsp cumin\nMint chutney to serve', recipeMethod:'1. Marinate paneer in yogurt and spices 20 mins\n2. Pan-fry until charred edges, set aside\n3. Sauté peppers and onion until soft\n4. Heat tortilla flat in a pan\n5. Scatter cheese on half, add paneer, peppers and onion\n6. Fold tortilla and press, cook 2 mins per side\n7. Slice into triangles, serve with mint chutney', prepTime:'10 mins prep (+ 20 mins marinate), 15 mins cook', caption:''},
+    {id:212, name:'High Protein Matar Paneer', format:'Static', status:'idea', protein:'28', carbs:'24', fat:'16', calories:'350', ingredients:'Paneer, Green Peas, Tomato Gravy', date:'2025-05-28', recipeIngredients:'200g paneer, cubed\n1 cup green peas (fresh or frozen)\n3 tomatoes, pureed\n1 onion, finely chopped\n1 tbsp ginger-garlic paste\n1 tsp cumin seeds\n1 tsp coriander powder\n½ tsp garam masala\n¼ tsp turmeric\n½ tsp Kashmiri red chilli\n2 tbsp Greek yogurt instead of cream\nSalt to taste', recipeMethod:'1. Lightly fry paneer until golden, set aside\n2. Sauté cumin, onion until golden, add ginger-garlic\n3. Add tomato puree and spices, cook 10 mins until oil separates\n4. Stir in yogurt, cook 2 mins\n5. Add peas, cook 5 mins\n6. Add paneer gently, simmer 3 mins\n7. Garnish with coriander', prepTime:'10 mins prep, 25 mins cook', caption:''},
+    {id:213, name:'Story: Indo-Western fusion week', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-28', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'🌍 Indo-Western fusion week starts today!\n\nSame desi flavours, new formats — quesadillas, bowls, pasta, wraps.\n\nWhat fusion dish do you want to see? Drop it below 👇'},
+    {id:214, name:'Rajma Lentil Pasta Bowl', format:'Static', status:'idea', protein:'24', carbs:'48', fat:'6', calories:'345', ingredients:'Lentil Pasta, Rajma, Indian Spices, Coriander', date:'2025-05-29', recipeIngredients:'100g red lentil pasta (or chickpea pasta)\n½ cup rajma, cooked\n2 tomatoes, pureed\n1 onion, chopped\n3 garlic cloves\n1 tsp cumin seeds\n1 tsp coriander powder\n½ tsp garam masala\n½ tsp chilli flakes\n1 tbsp olive oil\nCoriander and parmesan to garnish', recipeMethod:'1. Cook pasta per package, reserve ½ cup pasta water\n2. Sauté onion and garlic in oil until golden\n3. Add tomato puree and Indian spices, cook 10 mins\n4. Add rajma and pasta water, simmer 5 mins\n5. Toss cooked pasta through sauce\n6. Plate and garnish with coriander and a grating of parmesan\n7. The desi take on pasta — hits different', prepTime:'10 mins prep, 20 mins cook', caption:''},
+    {id:215, name:'Story: Week 2 recap + follow CTA', format:'Story', status:'idea', protein:'', carbs:'', fat:'', calories:'', ingredients:'', date:'2025-05-29', recipeIngredients:'', recipeMethod:'', prepTime:'', caption:'📅 Week 2 done!\n\nWhich recipe did you try? Drop the name below 👇\n\nNext week: more Indian high-protein recipes coming your way. Follow to never miss a post 🔔\n\nTried something? Tag us — your kitchen wins make our day 🥰'},
+  ];
+  save();
+}
 
-  function renderAll() { renderPosts(); renderPipeline(); renderCalendar(); renderIdeas(); renderHashtags(); updateStats(); }
+// ─── RENDER ALL ──────────────────────────────────────────────
+function renderAll() { renderPosts(); renderPipeline(); renderCalendar(); renderIdeas(); renderHashtags(); updateStats(); }
 
-  function updateStats() {
-    document.getElementById('stat-total').textContent = posts.length;
-    document.getElementById('stat-posted').textContent = posts.filter(p=>p.status==='posted').length;
-    document.getElementById('stat-pipeline').textContent = posts.filter(p=>p.status!=='posted').length;
-    const now = new Date(), ws = new Date(now);
-    ws.setDate(now.getDate()-now.getDay());
-    const we = new Date(ws); we.setDate(ws.getDate()+6);
-    document.getElementById('stat-week').textContent = posts.filter(p=>p.date && new Date(p.date+'T00:00:00')>=ws && new Date(p.date+'T00:00:00')<=we).length;
-  }
+function updateStats() {
+  document.getElementById('stat-total').textContent = posts.length;
+  document.getElementById('stat-posted').textContent = posts.filter(p=>p.status==='posted').length;
+  document.getElementById('stat-pipeline').textContent = posts.filter(p=>p.status!=='posted').length;
+  const now = new Date(), ws = new Date(now); ws.setDate(now.getDate()-now.getDay()); const we = new Date(ws); we.setDate(ws.getDate()+6);
+  document.getElementById('stat-week').textContent = posts.filter(p=>p.date&&new Date(p.date+'T00:00:00')>=ws&&new Date(p.date+'T00:00:00')<=we).length;
+  document.getElementById('stat-ideas').textContent = ideas.length;
+  const badge = document.getElementById('ideas-badge');
+  if(ideas.length){ badge.textContent = ideas.length; badge.style.display='inline'; }
+  else badge.style.display='none';
+}
 
-  function macroStrip(p) {
-    const parts = [];
-    if(p.protein) parts.push(`<span class="macro-pill macro-p">P: ${p.protein}g</span>`);
-    if(p.carbs) parts.push(`<span class="macro-pill macro-c">C: ${p.carbs}g</span>`);
-    if(p.fat) parts.push(`<span class="macro-pill macro-f">F: ${p.fat}g</span>`);
-    if(p.calories) parts.push(`<span class="macro-pill macro-cal">${p.calories} kcal</span>`);
-    return parts.length ? `<div class="macro-strip">${parts.join('')}</div>` : '<span style="color:var(--text-muted);font-size:0.75rem;">—</span>';
-  }
+function macroStrip(p) {
+  const parts=[];
+  if(p.protein) parts.push(`<span class="macro-pill macro-p">P:${p.protein}g</span>`);
+  if(p.carbs) parts.push(`<span class="macro-pill macro-c">C:${p.carbs}g</span>`);
+  if(p.fat) parts.push(`<span class="macro-pill macro-f">F:${p.fat}g</span>`);
+  if(p.calories) parts.push(`<span class="macro-pill macro-cal">${p.calories}kcal</span>`);
+  return parts.length?`<div class="macro-strip">${parts.join('')}</div>`:'<span style="font-size:.72rem;color:var(--text-muted);">—</span>';
+}
 
-  function renderPosts() {
-    const filter = document.getElementById('filterStatus').value;
-    const filtered = filter ? posts.filter(p=>p.status===filter) : posts;
-    const container = document.getElementById('posts-container');
-    if(!filtered.length) { container.innerHTML = `<div class="empty"><div class="emoji">🍽️</div>No posts yet. Click "+ Add Post" to start.</div>`; return; }
-
-    let html = `<table class="post-table"><thead><tr>
-      <th>Recipe</th><th>Format</th><th>Macros</th><th>Date</th><th>Status</th><th>Actions</th>
-    </tr></thead><tbody>`;
-
-    filtered.forEach(p => {
-      const isExp = expandedRows[p.id];
-      html += `<tr>
-        <td><div class="recipe-name">${p.name}</div>${p.ingredients?`<div class="recipe-preview">${p.ingredients}</div>`:''}</td>
-        <td><span class="fmt fmt-${p.format.toLowerCase()}">${p.format}</span></td>
-        <td>${macroStrip(p)}</td>
-        <td style="font-size:0.8rem;color:var(--text-muted);">${p.date?new Date(p.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'—'}</td>
-        <td><select class="status-select ${STATUS_COLORS[p.status]}" onchange="updateStatus(${p.id},this.value)">${STATUSES.map(s=>`<option value="${s}"${p.status===s?' selected':''}>${STATUS_LABELS[s]}</option>`).join('')}</select></td>
-        <td><div class="actions">
-          <button class="btn btn-outline btn-sm" onclick="toggleExpand(${p.id})">${isExp?'▲':'▼'} ${isExp?'Less':'More'}</button>
-          <button class="btn btn-outline btn-sm" onclick="openEditModal(${p.id})">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deletePost(${p.id})">Del</button>
-        </div></td>
-      </tr>
-      <tr><td colspan="6" style="padding:0;border-bottom:${isExp?'1px solid var(--border)':'none'};">
-        <div class="expand-content${isExp?' open':''}" id="expand-${p.id}">
-          <div class="expand-tabs">
-            <span class="expand-tab active" onclick="switchExpTab(${p.id},'recipe',this)">🍳 Recipe</span>
-            <span class="expand-tab" onclick="switchExpTab(${p.id},'caption',this)">✍️ Caption</span>
-          </div>
-          <div id="etab-r-${p.id}">
-            ${(p.recipeIngredients||p.recipeMethod) ? `<div class="recipe-viewer">
-              ${p.prepTime?`<div class="recipe-section-title">⏱ ${p.prepTime}</div>`:''}
-              ${p.recipeIngredients?`<div class="recipe-section-title">Ingredients</div><div class="recipe-text">${p.recipeIngredients}</div>`:''}
-              ${p.recipeMethod?`<div class="recipe-section-title">Method</div><div class="recipe-text">${p.recipeMethod}</div>`:''}
-            </div>` : `<div style="color:var(--text-muted);font-size:0.82rem;padding:6px 0;">No recipe added yet — click Edit to add.</div>`}
-          </div>
-          <div id="etab-c-${p.id}" style="display:none;">
-            ${p.caption?`<div class="recipe-viewer" style="font-size:0.84rem;line-height:1.6;">${p.caption}</div>`:''}
-            <div style="margin-top:10px;"><button class="btn btn-black btn-sm" onclick="quickCaption(${p.id})">✨ Generate Captions</button></div>
-            <div id="qcap-${p.id}"></div>
-          </div>
+function renderPosts() {
+  const fs = document.getElementById('filterStatus').value;
+  const ff = document.getElementById('filterFormat').value;
+  let filtered = posts.filter(p=>(fs?p.status===fs:true)&&(ff?p.format===ff:true));
+  const c = document.getElementById('posts-container');
+  if(!filtered.length){c.innerHTML=`<div class="empty"><div class="emoji">🍽️</div>No posts match the filter.</div>`;return;}
+  let html=`<table class="post-table"><thead><tr><th>Name</th><th>Format</th><th>Macros</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  filtered.forEach(p=>{
+    const ex=expandedRows[p.id];
+    const fmtClass=`fmt-${p.format.toLowerCase()}`;
+    html+=`<tr>
+      <td><div class="recipe-name">${p.name}</div>${p.ingredients?`<div class="recipe-preview">${p.ingredients}</div>`:''}</td>
+      <td><span class="fmt ${fmtClass}">${p.format}</span></td>
+      <td>${macroStrip(p)}</td>
+      <td style="font-size:.78rem;color:var(--text-muted);">${p.date?new Date(p.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'—'}</td>
+      <td><select class="status-select ${STATUS_COLORS[p.status]}" onchange="updateStatus(${p.id},this.value)">${STATUSES.map(s=>`<option value="${s}"${p.status===s?' selected':''}>${STATUS_LABELS[s]}</option>`).join('')}</select></td>
+      <td><div class="actions">
+        <button class="btn btn-outline btn-sm" onclick="toggleExpand(${p.id})">${ex?'▲':'▼'}</button>
+        <button class="btn btn-outline btn-sm" onclick="openEditModal(${p.id})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deletePost(${p.id})">Del</button>
+      </div></td>
+    </tr>
+    <tr><td colspan="6" style="padding:0;${ex?'border-bottom:1px solid var(--border);':''}">
+      <div class="expand-content${ex?' open':''}" id="expand-${p.id}">
+        <div class="expand-tabs">
+          <span class="expand-tab active" onclick="switchExpTab(${p.id},'recipe',this)">🍳 Recipe</span>
+          <span class="expand-tab" onclick="switchExpTab(${p.id},'caption',this)">✍️ Caption</span>
         </div>
-      </td></tr>`;
-    });
-    html += '</tbody></table>';
-    container.innerHTML = html;
-  }
-
-  function toggleExpand(id) { expandedRows[id] = !expandedRows[id]; renderPosts(); }
-
-  function switchExpTab(id, tab, el) {
-    document.querySelectorAll(`#expand-${id} .expand-tab`).forEach(t=>t.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById(`etab-r-${id}`).style.display = tab==='recipe'?'block':'none';
-    document.getElementById(`etab-c-${id}`).style.display = tab==='caption'?'block':'none';
-  }
-
-  function renderPipeline() {
-    document.getElementById('pipeline-board').innerHTML = STATUSES.map(s => {
-      const items = posts.filter(p=>p.status===s);
-      return `<div class="pipeline-col">
-        <div class="pipeline-col-header">${STATUS_LABELS[s]}<span class="pipeline-count">${items.length}</span></div>
-        ${items.length?items.map(p=>`<div class="pipeline-item"><div class="pi-name">${p.name}</div><div class="pi-meta"><span class="fmt fmt-${p.format.toLowerCase()}" style="font-size:0.62rem;">${p.format}</span>${p.protein?` · ${p.protein}g P`:''}</div></div>`).join(''):`<div style="font-size:0.7rem;color:var(--text-muted);text-align:center;padding:8px 0;">Empty</div>`}
-      </div>`;
-    }).join('');
-  }
-
-  function changeMonth(d) { calendarDate.setMonth(calendarDate.getMonth()+d); renderCalendar(); }
-  function renderCalendar() {
-    const yr = calendarDate.getFullYear(), mo = calendarDate.getMonth();
-    document.getElementById('calMonthLabel').textContent = calendarDate.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
-    const first = new Date(yr,mo,1).getDay(), days = new Date(yr,mo+1,0).getDate();
-    const tod = new Date(); tod.setHours(0,0,0,0);
-    let html = Array(first).fill(`<div class="cal-day" style="opacity:0.2;"></div>`).join('');
-    for(let d=1;d<=days;d++){
-      const ds=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      const dp=posts.filter(p=>p.date===ds);
-      const isT=new Date(yr,mo,d).getTime()===tod.getTime();
-      html+=`<div class="cal-day${isT?' today':''}"><div class="day-num">${d}</div>${dp.map(p=>`<div class="cal-post ${p.format.toLowerCase()}" title="${p.name}">${p.name.substring(0,11)}${p.name.length>11?'…':''}</div>`).join('')}</div>`;
-    }
-    document.getElementById('calendar-grid').innerHTML = html;
-  }
-
-  function addIdea() { const v=document.getElementById('ideaInput').value.trim(); if(!v)return; ideas.push(v); document.getElementById('ideaInput').value=''; saveIdeas(); renderIdeas(); }
-  function deleteIdea(i) { ideas.splice(i,1); saveIdeas(); renderIdeas(); }
-  function convertIdeaToPost(i) { const v=ideas[i]; ideas.splice(i,1); saveIdeas(); renderIdeas(); openModal(); document.getElementById('f-name').value=v; }
-  function renderIdeas() {
-    const list=document.getElementById('ideas-list');
-    if(!ideas.length){list.innerHTML='<div style="color:var(--text-muted);font-size:0.82rem;">No ideas yet.</div>';return;}
-    list.innerHTML=ideas.map((idea,i)=>`<div class="idea-tag"><span onclick="convertIdeaToPost(${i})" style="cursor:pointer;" title="Convert to post">${idea}</span><span class="del-idea" onclick="deleteIdea(${i})">×</span></div>`).join('');
-  }
-
-  function addHashtagSet() {
-    const n=document.getElementById('newSetName').value.trim(), t=document.getElementById('newSetTags').value.trim();
-    if(!n||!t)return;
-    hashtagSets.push({id:Date.now(),name:n,tags:t});
-    document.getElementById('newSetName').value=''; document.getElementById('newSetTags').value='';
-    saveHashtags(); renderHashtags();
-  }
-  function deleteHashtagSet(id){hashtagSets=hashtagSets.filter(s=>s.id!==id);saveHashtags();renderHashtags();}
-  function copyHashtagSet(id){const s=hashtagSets.find(x=>x.id===id);if(!s)return;navigator.clipboard.writeText(s.tags).then(()=>showToast('Hashtags copied! 🏷️'));}
-  function renderHashtags() {
-    const c=document.getElementById('hashtag-sets');
-    if(!hashtagSets.length){c.innerHTML='<div class="empty"><div class="emoji">🏷️</div>No sets yet.</div>';return;}
-    c.innerHTML=hashtagSets.map(s=>`<div class="hashtag-set">
-      <div class="hashtag-set-header"><div class="hashtag-set-name">${s.name}</div><div style="display:flex;gap:6px;"><button class="btn btn-black btn-sm" onclick="copyHashtagSet(${s.id})">Copy All</button><button class="btn btn-danger btn-sm" onclick="deleteHashtagSet(${s.id})">Del</button></div></div>
-      <div class="hashtag-tags">${s.tags.split(' ').filter(t=>t).map(t=>`<span class="hashtag-tag">${t}</span>`).join('')}</div>
-    </div>`).join('');
-  }
-
-  // ─── CAPTION GENERATOR ───────────────────────────────────
-  function buildCaptions(data) {
-    const name = data.name || 'this dish';
-    const protein = data.protein ? `${data.protein}g` : '';
-    const calories = data.calories ? `${data.calories} cal` : '';
-    const hero = data.ingredients ? data.ingredients.split(',')[0].trim() : '';
-    const isReel = data.format === 'Reel';
-    const macroLine = protein ? `📊 ${protein} protein${calories ? ` · ${calories}` : ''}` : '';
-
-    const enHooks = [
-      protein ? `${protein} of protein. One bowl. Zero compromise.` : `Healthy doesn't have to be boring.`,
-      `What if your ${name.toLowerCase()} could actually build muscle?`,
-      `I made ${name} healthier — and it honestly tastes better.`,
-      protein ? `High protein. Full flavour. ${protein} per serving.` : `Clean eating, Indian style.`,
-    ];
-    const hiHooks = [
-      protein ? `Bhai, ${protein} protein ek bowl mein? Serious baat kar raha hoon 🔥` : `Healthy khana boring nahi hota — ${name} ne prove kar diya 🔥`,
-      `${name} toh khaya hoga, lekin itna protein? Kabhi socha nahi hoga 👀`,
-      protein ? `${protein} protein, ghar ka khana — isse better kya hoga yaar 💪` : `Ghar ka khana, gym results. Simple.`,
-      `Yaar ek cheez bata — healthy khana aise kyun nahi banate sab log?`,
-    ];
-
-    const ei = Math.floor(Math.random() * enHooks.length);
-    const hi = Math.floor(Math.random() * hiHooks.length);
-
-    const enBody = hero ? `${name} made with ${hero} — packed with protein and big on flavour. This is what healthy Indian cooking actually looks like.` : `${name} — clean, high protein, and made with ingredients you already have at home.`;
-    const enCTA = isReel ? `Save this for your next meal prep 🔖\nDrop a 💪 if you want the full recipe!` : `Save this recipe 🔖\nLet me know if you try it 👇`;
-
-    const hiBody = hero ? `${name} mein ${hero} use kiya — aur result ekdum tasty aur protein se bhara 💯${macroLine ? `\n${macroLine}` : ''}` : `${name} — ghar mein bana, gym-ready result 💯${macroLine ? `\n${macroLine}` : ''}`;
-    const hiCTA = isReel ? `Save karo bhai, baad mein dhoondh rahe hoge 🔖\nComment mein batao kaisa laga 👇` : `Save kar lo yaar 🔖\nBanaya toh tag karo! 👇`;
-
-    return {
-      english: `${enHooks[ei]}\n\n${enBody}\n\n${enCTA}`,
-      hinglish: `${hiHooks[hi]}\n\n${hiBody}\n\n${hiCTA}`
-    };
-  }
-
-  function generateCaptions() {
-    const data = {
-      name: document.getElementById('f-name').value,
-      format: document.getElementById('f-format').value,
-      protein: document.getElementById('f-protein').value,
-      carbs: document.getElementById('f-carbs').value,
-      fat: document.getElementById('f-fat').value,
-      calories: document.getElementById('f-calories').value,
-      ingredients: document.getElementById('f-ingredients').value,
-    };
-    const caps = buildCaptions(data);
-    document.getElementById('cap-en').textContent = caps.english;
-    document.getElementById('cap-hi').textContent = caps.hinglish;
-    document.getElementById('caption-suggestions').style.display = 'block';
-  }
-
-  function quickCaption(id) {
-    const p = posts.find(x=>x.id===id);
-    if(!p) return;
-    const caps = buildCaptions(p);
-    document.getElementById(`qcap-${id}`).innerHTML = `<div class="caption-box" style="margin-top:10px;">
-      <div class="caption-box-header">✨ Caption Suggestions</div>
-      <div class="caption-option">
-        <div class="caption-lang"><span class="lang-en">🇬🇧 English</span><button class="btn-copy" onclick="copyText(this,'${encodeURIComponent(caps.english)}')">Copy</button></div>
-        <div class="caption-text">${caps.english}</div>
+        <div id="etab-r-${p.id}">
+          ${(p.recipeIngredients||p.recipeMethod||p.caption)?`<div class="recipe-viewer">
+            ${p.prepTime?`<div class="recipe-section-title">⏱ ${p.prepTime}</div>`:''}
+            ${p.recipeIngredients?`<div class="recipe-section-title">Ingredients</div><div class="recipe-text">${p.recipeIngredients}</div>`:''}
+            ${p.recipeMethod?`<div class="recipe-section-title">Method</div><div class="recipe-text">${p.recipeMethod}</div>`:''}
+            ${(!p.recipeIngredients&&!p.recipeMethod&&p.caption)?`<div class="recipe-section-title">Story Content</div><div class="recipe-text">${p.caption}</div>`:''}
+          </div>`:`<div style="color:var(--text-muted);font-size:.8rem;padding:6px 0;">No recipe added yet — click Edit to add.</div>`}
+        </div>
+        <div id="etab-c-${p.id}" style="display:none;">
+          ${p.caption?`<div class="recipe-viewer" style="font-size:.82rem;line-height:1.6;">${p.caption}</div>`:'<div style="color:var(--text-muted);font-size:.8rem;padding:6px 0;">No caption yet.</div>'}
+          <div style="margin-top:9px;"><button class="btn btn-black btn-sm" onclick="quickCaption(${p.id})">✨ Generate Captions</button></div>
+          <div id="qcap-${p.id}"></div>
+        </div>
       </div>
-      <div class="caption-option">
-        <div class="caption-lang"><span class="lang-hi">🇮🇳 Hinglish</span><button class="btn-copy" onclick="copyText(this,'${encodeURIComponent(caps.hinglish)}')">Copy</button></div>
-        <div class="caption-text">${caps.hinglish}</div>
-      </div>
+    </td></tr>`;
+  });
+  html+='</tbody></table>';
+  c.innerHTML=html;
+}
+
+function toggleExpand(id){expandedRows[id]=!expandedRows[id];renderPosts();}
+function switchExpTab(id,tab,el){
+  document.querySelectorAll(`#expand-${id} .expand-tab`).forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(`etab-r-${id}`).style.display=tab==='recipe'?'block':'none';
+  document.getElementById(`etab-c-${id}`).style.display=tab==='caption'?'block':'none';
+}
+
+function renderPipeline(){
+  document.getElementById('pipeline-board').innerHTML=STATUSES.map(s=>{
+    const items=posts.filter(p=>p.status===s);
+    return `<div class="pipeline-col"><div class="pipeline-col-header">${STATUS_LABELS[s]}<span class="pipeline-count">${items.length}</span></div>
+    ${items.length?items.map(p=>`<div class="pipeline-item"><div class="pi-name">${p.name}</div><div class="pi-meta"><span class="fmt fmt-${p.format.toLowerCase()}" style="font-size:.6rem;">${p.format}</span>${p.protein?` · ${p.protein}g P`:''}</div></div>`).join(''):`<div style="font-size:.68rem;color:var(--text-muted);text-align:center;padding:7px 0;">Empty</div>`}
     </div>`;
+  }).join('');
+}
+
+function changeMonth(d){calendarDate.setMonth(calendarDate.getMonth()+d);renderCalendar();}
+function renderCalendar(){
+  const yr=calendarDate.getFullYear(),mo=calendarDate.getMonth();
+  document.getElementById('calMonthLabel').textContent=calendarDate.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  const first=new Date(yr,mo,1).getDay(), days=new Date(yr,mo+1,0).getDate();
+  const tod=new Date();tod.setHours(0,0,0,0);
+  const launchDate='2025-05-16';
+  let html=Array(first).fill(`<div class="cal-day" style="opacity:.15;"></div>`).join('');
+  for(let d=1;d<=days;d++){
+    const ds=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dp=posts.filter(p=>p.date===ds);
+    const isT=new Date(yr,mo,d).getTime()===tod.getTime();
+    const isL=ds===launchDate;
+    html+=`<div class="cal-day${isT?' today':''}${isL?' launch-day':''}"><div class="day-num">${d}${isL?'🚀':''}</div>${dp.map(p=>`<div class="cal-post ${p.format.toLowerCase()}" title="${p.name}">${p.name.substring(0,12)}${p.name.length>12?'…':''}</div>`).join('')}</div>`;
   }
+  document.getElementById('calendar-grid').innerHTML=html;
+}
 
-  function copyCaptionToField(lang) {
-    document.getElementById('f-caption').value = document.getElementById(lang==='en'?'cap-en':'cap-hi').textContent;
-    showToast('Caption added ✓');
+// ─── IDEAS BANK (rich + simple) ──────────────────────────────
+function addSimpleIdea(){
+  const v=document.getElementById('ideaInput').value.trim();
+  if(!v)return;
+  ideas.unshift({simple:true,name:v,addedDate:new Date().toISOString().split('T')[0]});
+  document.getElementById('ideaInput').value='';
+  saveIdeas();renderIdeas();
+}
+function deleteIdea(i){ideas.splice(i,1);saveIdeas();renderIdeas();}
+function convertIdea(i){
+  const idea=ideas[i];
+  ideas.splice(i,1);saveIdeas();renderIdeas();
+  openModal();
+  document.getElementById('f-name').value=idea.name||'';
+  if(!idea.simple){
+    document.getElementById('f-format').value=idea.format||'Reel';
+    document.getElementById('f-protein').value=idea.protein||'';
+    document.getElementById('f-carbs').value=idea.carbs||'';
+    document.getElementById('f-fat').value=idea.fat||'';
+    document.getElementById('f-calories').value=idea.calories||'';
+    document.getElementById('f-ingredients').value=idea.ingredients||'';
+    document.getElementById('f-recipe-ingredients').value=idea.recipeIngredients||'';
+    document.getElementById('f-recipe-method').value=idea.recipeMethod||'';
+    document.getElementById('f-prep-time').value=idea.prepTime||'';
+    if(idea.captionEn) document.getElementById('f-caption').value=idea.captionEn;
   }
-  function copyText(btn, encoded) { navigator.clipboard.writeText(decodeURIComponent(encoded)).then(()=>showToast('Copied! ✓')); }
+}
+function renderIdeas(){
+  const list=document.getElementById('ideas-list');
+  if(!ideas.length){list.innerHTML=`<div class="empty"><div class="emoji">💡</div>No ideas yet. Daily automation adds 3-4 every morning at 10AM.</div>`;return;}
+  list.innerHTML=ideas.map((idea,i)=>{
+    if(idea.simple||typeof idea==='string'){
+      const name=typeof idea==='string'?idea:idea.name;
+      return `<div class="idea-card simple">
+        <div class="idea-card-name">${name}</div>
+        <div class="idea-card-actions">
+          <button class="btn btn-black btn-sm" onclick="convertIdea(${i})">Convert to Post</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteIdea(${i})">Delete</button>
+        </div>
+      </div>`;
+    }
+    const macros=[idea.protein?`P:${idea.protein}g`:'',idea.calories?`${idea.calories}kcal`:''].filter(Boolean).join(' · ');
+    return `<div class="idea-card rich">
+      <div class="idea-card-name">${idea.name}</div>
+      <div class="idea-card-meta">${idea.format||''}${macros?' · '+macros:''}</div>
+      ${idea.captionEn?`<div class="idea-card-caption">${idea.captionEn}</div>`:''}
+      <div class="idea-card-actions">
+        <button class="btn btn-black btn-sm" onclick="convertIdea(${i})">Convert to Post</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteIdea(${i})">Delete</button>
+      </div>
+      <div class="idea-added">Added ${idea.addedDate||'today'}</div>
+    </div>`;
+  }).join('');
+}
 
-  // ─── MODAL ────────────────────────────────────────────────
-  function openModal() {
-    editingId = null;
-    document.getElementById('modal-title').textContent = 'Add New Post';
-    ['f-name','f-protein','f-carbs','f-fat','f-calories','f-ingredients','f-caption','f-date','f-recipe-ingredients','f-recipe-method','f-prep-time'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('f-format').value='Reel';
-    document.getElementById('f-status').value='idea';
-    document.getElementById('caption-suggestions').style.display='none';
-    switchModalTab('details');
-    document.getElementById('modal').classList.add('open');
-  }
+// ─── HASHTAGS ────────────────────────────────────────────────
+function addHashtagSet(){const n=document.getElementById('newSetName').value.trim(),t=document.getElementById('newSetTags').value.trim();if(!n||!t)return;hashtagSets.push({id:Date.now(),name:n,tags:t});document.getElementById('newSetName').value='';document.getElementById('newSetTags').value='';saveHashtags();renderHashtags();}
+function deleteHashtagSet(id){hashtagSets=hashtagSets.filter(s=>s.id!==id);saveHashtags();renderHashtags();}
+function copyHashtagSet(id){const s=hashtagSets.find(x=>x.id===id);if(!s)return;navigator.clipboard.writeText(s.tags).then(()=>showToast('Hashtags copied! 🏷️'));}
+function renderHashtags(){
+  const c=document.getElementById('hashtag-sets');
+  if(!hashtagSets.length){c.innerHTML='<div class="empty"><div class="emoji">🏷️</div>No sets yet.</div>';return;}
+  c.innerHTML=hashtagSets.map(s=>`<div class="hashtag-set">
+    <div class="hashtag-set-header"><div class="hashtag-set-name">${s.name}</div><div style="display:flex;gap:5px;"><button class="btn btn-black btn-sm" onclick="copyHashtagSet(${s.id})">Copy All</button><button class="btn btn-danger btn-sm" onclick="deleteHashtagSet(${s.id})">Del</button></div></div>
+    <div class="hashtag-tags">${s.tags.split(' ').filter(t=>t).map(t=>`<span class="hashtag-tag">${t}</span>`).join('')}</div>
+  </div>`).join('');
+}
 
-  function openEditModal(id) {
-    const p=posts.find(x=>x.id===id); if(!p)return;
-    editingId=id;
-    document.getElementById('modal-title').textContent='Edit Post';
-    document.getElementById('f-name').value=p.name||'';
-    document.getElementById('f-format').value=p.format||'Reel';
-    document.getElementById('f-status').value=p.status||'idea';
-    document.getElementById('f-protein').value=p.protein||'';
-    document.getElementById('f-carbs').value=p.carbs||'';
-    document.getElementById('f-fat').value=p.fat||'';
-    document.getElementById('f-calories').value=p.calories||'';
-    document.getElementById('f-date').value=p.date||'';
-    document.getElementById('f-ingredients').value=p.ingredients||'';
-    document.getElementById('f-caption').value=p.caption||'';
-    document.getElementById('f-recipe-ingredients').value=p.recipeIngredients||'';
-    document.getElementById('f-recipe-method').value=p.recipeMethod||'';
-    document.getElementById('f-prep-time').value=p.prepTime||'';
-    document.getElementById('caption-suggestions').style.display='none';
-    switchModalTab('details');
-    document.getElementById('modal').classList.add('open');
-  }
+// ─── CAPTION GENERATOR ───────────────────────────────────────
+function buildCaptions(data){
+  const name=data.name||'this dish', protein=data.protein?`${data.protein}g`:'', calories=data.calories?`${data.calories}cal`:'';
+  const hero=data.ingredients?data.ingredients.split(',')[0].trim():'', isReel=data.format==='Reel';
+  const macroLine=protein?`📊 ${protein} protein${calories?' · '+calories:''}`:'';
+  const enHooks=[protein?`${protein} of protein. One bowl. Zero compromise.`:`Healthy doesn't have to be boring.`,`What if your ${name.toLowerCase()} could actually build muscle?`,`I made ${name} healthier — and it honestly tastes better.`,protein?`High protein. Full flavour. ${protein} per serving.`:`Clean eating, Indian style.`];
+  const hiHooks=[protein?`Bhai, ${protein} protein ek bowl mein? Serious baat kar raha hoon 🔥`:`Healthy khana boring nahi hota — ${name} ne prove kar diya 🔥`,`${name} toh khaya hoga, lekin itna protein? Kabhi socha nahi hoga 👀`,protein?`${protein} protein, ghar ka khana — isse better kya hoga yaar 💪`:`Ghar ka khana, gym results. Simple.`];
+  const ei=Math.floor(Math.random()*enHooks.length), hi=Math.floor(Math.random()*hiHooks.length);
+  const enBody=hero?`${name} made with ${hero} — packed with protein and big on flavour. This is what healthy Indian cooking actually looks like.`:`${name} — clean, high protein, and made with ingredients you already have at home.`;
+  const hiBody=hero?`${name} mein ${hero} use kiya — aur result ekdum tasty aur protein se bhara 💯${macroLine?'\n'+macroLine:''}`:`${name} — ghar mein bana, gym-ready result 💯${macroLine?'\n'+macroLine:''}`;
+  const enCTA=isReel?`Save this for your next meal prep 🔖\nDrop a 💪 if you want the full recipe!`:`Save this recipe 🔖\nLet me know if you try it 👇`;
+  const hiCTA=isReel?`Save karo bhai, baad mein dhoondh rahe hoge 🔖\nComment mein batao kaisa laga 👇`:`Save kar lo yaar 🔖\nBanaya toh tag karo! 👇`;
+  return{english:`${enHooks[ei]}\n\n${enBody}\n\n${enCTA}`,hinglish:`${hiHooks[hi]}\n\n${hiBody}\n\n${hiCTA}`};
+}
+function generateCaptions(){
+  const data={name:document.getElementById('f-name').value,format:document.getElementById('f-format').value,protein:document.getElementById('f-protein').value,carbs:document.getElementById('f-carbs').value,fat:document.getElementById('f-fat').value,calories:document.getElementById('f-calories').value,ingredients:document.getElementById('f-ingredients').value};
+  const caps=buildCaptions(data);
+  document.getElementById('cap-en').textContent=caps.english;
+  document.getElementById('cap-hi').textContent=caps.hinglish;
+  document.getElementById('caption-suggestions').style.display='block';
+}
+function quickCaption(id){
+  const p=posts.find(x=>x.id===id);if(!p)return;
+  const caps=buildCaptions(p);
+  document.getElementById(`qcap-${id}`).innerHTML=`<div class="caption-box" style="margin-top:9px;">
+    <div class="caption-box-header">✨ Caption Suggestions</div>
+    <div class="caption-option"><div class="caption-lang"><span class="lang-en">🇬🇧 English</span><button class="btn-copy" onclick="copyText('${encodeURIComponent(caps.english)}')">Copy</button></div><div class="caption-text">${caps.english}</div></div>
+    <div class="caption-option"><div class="caption-lang"><span class="lang-hi">🇮🇳 Hinglish</span><button class="btn-copy" onclick="copyText('${encodeURIComponent(caps.hinglish)}')">Copy</button></div><div class="caption-text">${caps.hinglish}</div></div>
+  </div>`;
+}
+function copyCaptionToField(lang){document.getElementById('f-caption').value=document.getElementById(lang==='en'?'cap-en':'cap-hi').textContent;showToast('Caption added ✓');}
+function copyText(encoded){navigator.clipboard.writeText(decodeURIComponent(encoded)).then(()=>showToast('Copied! ✓'));}
 
-  function closeModal(){document.getElementById('modal').classList.remove('open');}
-  document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+// ─── MODAL ───────────────────────────────────────────────────
+function openModal(){
+  editingId=null;document.getElementById('modal-title').textContent='Add New Post';
+  ['f-name','f-protein','f-carbs','f-fat','f-calories','f-ingredients','f-caption','f-date','f-recipe-ingredients','f-recipe-method','f-prep-time'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-format').value='Reel';document.getElementById('f-status').value='idea';
+  document.getElementById('caption-suggestions').style.display='none';
+  switchModalTab('details');document.getElementById('modal').classList.add('open');
+}
+function openEditModal(id){
+  const p=posts.find(x=>x.id===id);if(!p)return;
+  editingId=id;document.getElementById('modal-title').textContent='Edit Post';
+  document.getElementById('f-name').value=p.name||'';document.getElementById('f-format').value=p.format||'Reel';
+  document.getElementById('f-status').value=p.status||'idea';document.getElementById('f-protein').value=p.protein||'';
+  document.getElementById('f-carbs').value=p.carbs||'';document.getElementById('f-fat').value=p.fat||'';
+  document.getElementById('f-calories').value=p.calories||'';document.getElementById('f-date').value=p.date||'';
+  document.getElementById('f-ingredients').value=p.ingredients||'';document.getElementById('f-caption').value=p.caption||'';
+  document.getElementById('f-recipe-ingredients').value=p.recipeIngredients||'';
+  document.getElementById('f-recipe-method').value=p.recipeMethod||'';
+  document.getElementById('f-prep-time').value=p.prepTime||'';
+  document.getElementById('caption-suggestions').style.display='none';
+  switchModalTab('details');document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+function switchModalTab(name){['details','recipe','caption'].forEach((n,i)=>{document.querySelectorAll('.modal-tab')[i].classList.toggle('active',n===name);document.getElementById('mtab-'+n).classList.toggle('active',n===name);});}
+function savePost(){
+  const name=document.getElementById('f-name').value.trim();if(!name){alert('Name required.');return;}
+  const post={id:editingId||Date.now(),name,format:document.getElementById('f-format').value,status:document.getElementById('f-status').value,protein:document.getElementById('f-protein').value,carbs:document.getElementById('f-carbs').value,fat:document.getElementById('f-fat').value,calories:document.getElementById('f-calories').value,date:document.getElementById('f-date').value,ingredients:document.getElementById('f-ingredients').value,caption:document.getElementById('f-caption').value,recipeIngredients:document.getElementById('f-recipe-ingredients').value,recipeMethod:document.getElementById('f-recipe-method').value,prepTime:document.getElementById('f-prep-time').value};
+  if(editingId){const i=posts.findIndex(p=>p.id===editingId);if(i>-1)posts[i]=post;}else posts.push(post);
+  save();closeModal();renderAll();showToast('Post saved ✓');
+}
+function updateStatus(id,s){const p=posts.find(x=>x.id===id);if(p){p.status=s;save();renderPipeline();updateStats();}}
+function deletePost(id){if(!confirm('Delete this post?'))return;posts=posts.filter(p=>p.id!==id);save();renderAll();}
 
-  function switchModalTab(name){
-    ['details','recipe','caption'].forEach((n,i)=>{
-      document.querySelectorAll('.modal-tab')[i].classList.toggle('active',n===name);
-      document.getElementById('mtab-'+n).classList.toggle('active',n===name);
-    });
-  }
+// ─── TABS ────────────────────────────────────────────────────
+function switchTab(name){
+  const names=['posts','pipeline','calendar','ideas','hashtags','notes'];
+  names.forEach((n,i)=>{document.querySelectorAll('.tab')[i].classList.toggle('active',n===name);document.getElementById('tab-'+n).classList.toggle('active',n===name);});
+  if(name==='calendar')renderCalendar();if(name==='pipeline')renderPipeline();
+}
 
-  function savePost() {
-    const name=document.getElementById('f-name').value.trim();
-    if(!name){alert('Recipe name is required.');return;}
-    const post={
-      id:editingId||Date.now(), name,
-      format:document.getElementById('f-format').value,
-      status:document.getElementById('f-status').value,
-      protein:document.getElementById('f-protein').value,
-      carbs:document.getElementById('f-carbs').value,
-      fat:document.getElementById('f-fat').value,
-      calories:document.getElementById('f-calories').value,
-      date:document.getElementById('f-date').value,
-      ingredients:document.getElementById('f-ingredients').value,
-      caption:document.getElementById('f-caption').value,
-      recipeIngredients:document.getElementById('f-recipe-ingredients').value,
-      recipeMethod:document.getElementById('f-recipe-method').value,
-      prepTime:document.getElementById('f-prep-time').value,
-    };
-    if(editingId){const i=posts.findIndex(p=>p.id===editingId);if(i>-1)posts[i]=post;}
-    else posts.push(post);
-    save(); closeModal(); renderAll(); showToast('Post saved ✓');
-  }
-
-  function updateStatus(id,s){const p=posts.find(x=>x.id===id);if(p){p.status=s;save();renderPipeline();updateStats();}}
-  function deletePost(id){if(!confirm('Delete this post?'))return;posts=posts.filter(p=>p.id!==id);save();renderAll();}
-
-  function switchTab(name){
-    ['posts','pipeline','calendar','ideas','hashtags','notes'].forEach((n,i)=>{
-      document.querySelectorAll('.tab')[i].classList.toggle('active',n===name);
-      document.getElementById('tab-'+n).classList.toggle('active',n===name);
-    });
-    if(name==='calendar')renderCalendar();
-    if(name==='pipeline')renderPipeline();
-  }
-
-  function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 </script>
 </body>
 </html>
